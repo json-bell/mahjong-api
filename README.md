@@ -4,7 +4,7 @@ This is a repository for a Mahjong score tracker. The goal is to have the follow
 
 - Score your Mahjong hand according to several scoring systems, including Hong-Kong Old Scoring or Chinese International Scoring
 - Track the score throughout a game by submitting hands
-- Access all this through the front-end accessible here
+- Access this through the front-end web app, synced between players here
 
 ## How to run locally
 

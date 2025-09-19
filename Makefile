@@ -1,7 +1,7 @@
 # Start the FastAPI server
 start:
-	uvicorn main:app --reload
-
+	uvicorn app.main:app --reload
+	
 # Run tests - TODO
 test:
 	echo "No test system defined"
