@@ -1,14 +1,7 @@
-def calculate_hand_score(tiles, win_type):
-    """
-    Placeholder scoring logic:
-    - 1 fan per 3 tiles
-    - 1000 points per fan
-    """
-    fan = len(tiles) // 3
-    points = fan * 1000
-    return {
-        "fan": fan,
-        "points": points,
-        "tiles": tiles,
-        "win_type": win_type
-    }
+from app.models import Hand
+
+
+def calculate_hand_score(hand: Hand):
+    pair = hand.pair
+    handStr = f"Your hand has: {', '.join([f'a {meld.type} of {meld.tile.value} {meld.tile.suit}' for meld in hand.melds])}\n and a pair of {pair.value} {pair.suit}"
+    return {"hand": handStr}

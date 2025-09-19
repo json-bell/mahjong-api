@@ -1,23 +1,23 @@
-from pydantic import BaseModel, model_validator
+from pydantic import BaseModel, Field, model_validator
 from typing import Literal, List, get_args
 
-# All allowed suits
 Suit = Literal["circle", "bamboo", "character", "wind", "dragon"]
 
-# Allowed values
 NumberValue = Literal["1", "2", "3", "4", "5", "6", "7", "8", "9"]
 WindValue = Literal["east", "south", "west", "north"]
 DragonValue = Literal["red", "green", "white"]
+
+MeldType = Literal["chow", "pong", "kong"]
 
 
 class Tile(BaseModel):
     suit: Suit
     value: NumberValue | WindValue | DragonValue
 
-    def is_honor(self) -> bool:
-        return self.suit == "honor"
+    def is_honour(self) -> bool:
+        return self.suit == "wind" or self.suit == "dragon"
 
-    @model_validator(mode="after")  # runs after model is initialized
+    @model_validator(mode="after")
     def check_suit_value_combination(cls, tile: "Tile"):
         suit = tile.suit
         value = tile.value
@@ -39,7 +39,24 @@ class Tile(BaseModel):
         return tile
 
 
-# --- Hand model ---
+class Meld(BaseModel):
+    type: MeldType
+    tile: Tile  # the first tile of the meld - for chows this is the lowest tile, for pongs and kongs this is any tile
+
+    @model_validator(mode="after")
+    def check_meld(cls, meld: "Meld"):
+        tile = meld.tile
+        type = meld.type
+        if type == "chow":
+            if tile.value == "8" or tile.value == "9":
+                raise ValueError(
+                    "Chows should use the lowest tile value (789 should be recorded as 7)"
+                )
+            if tile.is_honour():
+                raise ValueError("Honour tiles cannot form chows")
+        return meld
+
+
 class Hand(BaseModel):
-    tiles: List[Tile]  # List of Tile objects
-    win_type: str  # "ron" or "tsumo"
+    melds: List[Meld] = Field(..., min_length=4, max_length=4)
+    pair: Tile
