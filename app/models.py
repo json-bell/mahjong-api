@@ -17,6 +17,11 @@ class Tile(BaseModel):
     def is_honour(self) -> bool:
         return self.suit == "wind" or self.suit == "dragon"
 
+    def describe(self) -> str:
+        if self.is_honour():
+            return f"{self.value.capitalize()} {self.suit.capitalize()}"
+        return f"{self.value} of {self.suit.capitalize()}"
+
     @model_validator(mode="after")
     def check_suit_value_combination(cls, tile: "Tile"):
         suit = tile.suit
@@ -56,7 +61,21 @@ class Meld(BaseModel):
                 raise ValueError("Honour tiles cannot form chows")
         return meld
 
+    def describe(self) -> str:
+        if self.type != "chow":
+            return f"{self.tile.describe()} {self.type.capitalize()}"
+        return f"{'-'.join([str(i + int(self.tile.value)) for i in [0, 1, 2]])} {self.tile.suit.capitalize()} Chow"
+
 
 class Hand(BaseModel):
     melds: List[Meld] = Field(..., min_length=4, max_length=4)
     pair: Tile
+
+    def suits(self):
+        return list(set([meld.suit for meld in self.melds]))
+
+    def chowCount(self) -> int:
+        return [meld.type for meld in self.melds].count("chow")
+
+    def describe(self) -> str:
+        return f"{', '.join([f'a {meld.describe()}' for meld in self.melds])} and a pair of {self.pair.describe()}."
