@@ -2,7 +2,7 @@
 venv/
 
 # environment vars
-.env
+.env*
 
 # cache
 __pycache__/
