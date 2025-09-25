@@ -18,6 +18,11 @@ def read_root():
     }
 
 
+@app.get("/healthz")
+def healthz():
+    return {"status": "ok"}
+
+
 @app.get("/api")
 def read_api():
     with open(ENDPOINTS_JSON_PATH, "r") as f:
