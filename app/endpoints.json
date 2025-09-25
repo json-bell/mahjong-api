@@ -1,5 +1,35 @@
 {
-  "GET /api": {
-    "description": "Serves a JSON representation of all the available endpoints of the api"
+  "api": {
+    "GET": {
+      "description": "Serves a JSON representation of all available endpoints"
+    }
+  },
+  "healthz": {
+    "GET": {
+      "description": "Health check - responds with 200 & status: ok"
+    }
+  },
+  "score": {
+    "POST": {
+      "description": "Scores a Mahjong hand"
+    }
+  },
+  "game": {
+    "GET": {
+      "description": "Get all games"
+    },
+    "POST": {
+      "description": "Create a new game"
+    },
+    "{game_id}": {
+      "GET": {
+        "description": "Get a specific game"
+      },
+      "hands": {
+        "POST": {
+          "description": "Add a new hand to a game"
+        }
+      }
+    }
   }
 }
