@@ -18,7 +18,7 @@ class Hand:
 
     @property
     def suits(self) -> List[str]:
-        return list(set([meld.suit for meld in self.melds]))
+        return list(set([meld.tile.suit for meld in self.melds]))
 
     @property
     def chow_count(self) -> int:

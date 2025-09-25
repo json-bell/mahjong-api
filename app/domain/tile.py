@@ -24,10 +24,11 @@ class Tile:
 
     @property
     def chow_sequence(self) -> str:
+        if not isinstance(self.value, NumberValue):
+            raise TypeError("Honour tiles cannot form chows")
+
         if self.value in (NumberValue.EIGHT, NumberValue.NINE):
             raise ValueError(f"Chows cannot be made starting from {self.value.number}")
-        if self.is_honour:
-            raise ValueError("Honour tiles cannot form chows")
 
         return "-".join([str(i + self.value.number) for i in [0, 1, 2]])
 
