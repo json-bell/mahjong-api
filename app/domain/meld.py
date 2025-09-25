@@ -1,5 +1,6 @@
 from app.domain.enums import MeldType, NumberValue
 from app.domain.tile import Tile
+from app.schemas.meld import MeldSchema
 
 
 class Meld:
@@ -30,3 +31,7 @@ class Meld:
                 )
             elif tile.is_honour:
                 raise ValueError("Honour tiles cannot form chows")
+
+    @classmethod
+    def from_schema(cls, schema: MeldSchema) -> "Meld":
+        return cls(schema.type, Tile.from_schema(schema.tile))

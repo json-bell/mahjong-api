@@ -35,10 +35,6 @@ class Hand:
 
     @classmethod
     def from_schema(cls, schema: HandSchema) -> "Hand":
-        # Convert schema melds to domain Meld objects
-        melds = [
-            Meld(m.type, Tile(t.suit, t.value)) for m in schema.melds for t in [m.tile]
-        ]
-        # Convert pair to domain Tile
-        pair = Tile(schema.pair.suit, schema.pair.value)
+        melds = [Meld.from_schema(meld) for meld in schema.melds]
+        pair = Tile.from_schema(schema.pair)
         return cls(melds, pair)

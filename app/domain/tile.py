@@ -5,6 +5,7 @@ from app.domain.enums import (
     DragonValue,
     WindValue,
 )
+from app.schemas.tile import TileSchema
 
 
 class Tile:
@@ -50,3 +51,7 @@ class Tile:
             raise ValueError(
                 f"{suit.label} suit tiles must have value in {NumberValue.values()}"
             )
+
+    @classmethod
+    def from_schema(cls, schema: TileSchema) -> "Tile":
+        return cls(schema.suit, schema.value)
