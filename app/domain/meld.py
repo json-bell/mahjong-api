@@ -6,7 +6,8 @@ from app.schemas.meld import MeldSchema
 class Meld:
     def __init__(self, type: MeldType, tile: Tile):
         self.type = type
-        self.tile = tile  # the first tile of the meld - for chows this is the lowest tile, for pongs and kongs this is any tile
+        self.tile = tile  # the first tile of the meld
+        # for chows this is the lowest tile, for pongs and kongs this is any tile
         self._validate()
 
     @property
