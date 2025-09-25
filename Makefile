@@ -28,7 +28,7 @@ venv: ## Create virtual environment
 install-precommit:
 	@echo "Installing pre-commit hooks..."
 	pre-commit install          # pre-commit hook
-	pre-commit install --hook-type push  # pre-push hook
+	pre-commit install --hook-type pre-push  # pre-push hook
 
 check:
 	pre-commit run --all-files
