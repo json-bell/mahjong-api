@@ -1,10 +1,3 @@
-# ------------------------
-# Variables
-# ------------------------
-PYTHON := venv/bin/python
-PIP := venv/bin/pip
-UVICORN := venv/bin/uvicorn
-
 # Default environment
 ENV ?= dev
 
@@ -18,10 +11,10 @@ ENV ?= dev
 # ------------------------
 venv: ## Create virtual environment
 	python3 -m venv venv
-	$(PIP) install --upgrade pip wheel
+	pip install --upgrade pip wheel
 
 install: venv ## Install project dependencies
-	$(PIP) install -r requirements.txt
+	pip install -r requirements.txt
 
 install-precommit: ## Setup pre-commit hooks
 	@echo "Installing pre-commit hooks..."
@@ -34,18 +27,18 @@ install-precommit: ## Setup pre-commit hooks
 setup-dbs:
 	psql -f ./app/db/setup_dbs.sql
 
-# TODO
-seed: @echo "Seeding not yet set up"
+seed:
+	python -m scripts.seed
 
 # ------------------------
 # Run & test
 # ------------------------
 start: ## Start FastAPI server
 	@echo "Starting FastAPI in $(ENV) environment..."
-	$(UVICORN) app.main:app --reload
+	uvicorn app.main:app --reload
 
 test: ## Run tests (always uses test environment)
-	ENV=test $(PYTHON) -m pytest
+	ENV=test python -m pytest
 
 # ------------------------
 # Code quality
@@ -61,4 +54,4 @@ lint: ## Run linters
 # Utilities
 # ------------------------
 freeze: ## Freeze requirements
-	$(PIP) freeze > requirements.txt
+	pip freeze > requirements.txt

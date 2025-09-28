@@ -15,6 +15,11 @@ def seed():
 
     print("Seeded game")
 
+    hand = models.Hand()
+    db.add(hand)
+    db.commit()
+    db.refresh(hand)
+
 
 if __name__ == "__main__":
     seed()
