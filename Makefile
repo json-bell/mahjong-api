@@ -1,4 +1,6 @@
+# ------------------------
 # Variables
+# ------------------------
 PYTHON := venv/bin/python
 PIP := venv/bin/pip
 UVICORN := venv/bin/uvicorn
@@ -6,49 +8,55 @@ UVICORN := venv/bin/uvicorn
 # Default environment
 ENV ?= dev
 
-# Paths to .env files
-ENV_FILE := .env.$(ENV)
+# ------------------------
+# Phony targets
+# ------------------------
+.PHONY: start seed-dbs test freeze install venv install-precommit check lint
 
-# Export ENV so subprocesses know which environment is active
-export ENV
-
-# Load .env file before running commands
-define load_env
-	@echo "Loading environment $(ENV) from $(ENV_FILE)"
-	@export $(shell sed 's/=.*//' $(ENV_FILE))
-endef
-
-# Start the FastAPI server
-start:
-	@echo "Starting FastAPI in $(ENV) environment..."
-	@export ENV=$(ENV) && $(UVICORN) app.main:app --reload
-
-# Run tests
-test:
-	$(PYTHON) -m pytest
-
-# Freeze requirements
-freeze:
-	$(PIP) freeze > requirements.txt
-
-
-install: venv # Install dependencies
-	$(PIP) install -r requirements.txt
-
-# Create venv if it doesn't exist
+# ------------------------
+# Virtual environment & dependencies
+# ------------------------
 venv: ## Create virtual environment
 	python3 -m venv venv
 	$(PIP) install --upgrade pip wheel
 
-# Sets up pre-commit hooks and pushes
-install-precommit:
-	@echo "Installing pre-commit hooks..."
-	pre-commit install          # pre-commit hook
-	pre-commit install --hook-type pre-push  # pre-push hook
+install: venv ## Install project dependencies
+	$(PIP) install -r requirements.txt
 
-check:
+install-precommit: ## Setup pre-commit hooks
+	@echo "Installing pre-commit hooks..."
+	pre-commit install
+	pre-commit install --hook-type pre-push
+
+# ------------------------
+# Database
+# ------------------------
+seed-dbs: ## Seed the PostgreSQL database
+	@echo "Seeding PSQL DBs in $(ENV) environment..."
+	$(PYTHON) -m scripts.seed_db
+
+# ------------------------
+# Run & test
+# ------------------------
+start: ## Start FastAPI server
+	@echo "Starting FastAPI in $(ENV) environment..."
+	$(UVICORN) app.main:app --reload
+
+test: ## Run tests (always uses test environment)
+	ENV=test $(PYTHON) -m pytest
+
+# ------------------------
+# Code quality
+# ------------------------
+check: ## Run pre-commit checks
 	pre-commit run --all-files
 
-lint:
+lint: ## Run linters
 	flake8 app tests
 	mypy app tests
+
+# ------------------------
+# Utilities
+# ------------------------
+freeze: ## Freeze requirements
+	$(PIP) freeze > requirements.txt
