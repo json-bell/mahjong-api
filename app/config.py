@@ -10,10 +10,15 @@ ENV = os.getenv("ENV", "dev")  # 'dev', 'test', or 'prod'
 
 # Load the corresponding .env file
 env_path = Path(f".env.{ENV}")
-if not env_path.exists():
-    raise FileNotFoundError(f"{env_path} not found! Make sure your .env files exist.")
-
-load_dotenv(dotenv_path=env_path)
+if env_path.exists():
+    load_dotenv(dotenv_path=env_path)
+else:
+    if ENV == "prod":
+        print("In production, loading system environment variables.")
+    else:
+        print(
+            f"[WARNING] {env_path} not found. Falling back to system environment variables."
+        )
 
 
 class Settings(BaseSettings):
