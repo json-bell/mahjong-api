@@ -1,0 +1,5 @@
+DROP DATABASE IF EXISTS mahjong_test;
+DROP DATABASE IF EXISTS mahjong;
+
+CREATE DATABASE mahjong_test;
+CREATE DATABASE mahjong;

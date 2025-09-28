@@ -31,9 +31,11 @@ install-precommit: ## Setup pre-commit hooks
 # ------------------------
 # Database
 # ------------------------
-seed-dbs: ## Seed the PostgreSQL database
-	@echo "Seeding PSQL DBs in $(ENV) environment..."
-	$(PYTHON) -m scripts.seed_db
+setup-dbs:
+	psql -f ./app/db/setup_dbs.sql
+
+# TODO
+seed: @echo "Seeding not yet set up"
 
 # ------------------------
 # Run & test

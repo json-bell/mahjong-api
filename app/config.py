@@ -1,9 +1,8 @@
 import os
 from pathlib import Path
 from dotenv import load_dotenv
-from pydantic import Field
 from pydantic_settings import BaseSettings, SettingsConfigDict
-from typing import Annotated
+from pydantic import Field
 
 
 # Determine which environment to use (default to dev)
@@ -17,13 +16,34 @@ if not env_path.exists():
 load_dotenv(dotenv_path=env_path)
 
 
-class Settings(BaseSettings):  # type: ignore[valid-type] # type:ignore[misc]
-    database_url: Annotated[str, Field(..., env="DATABASE_URL")]
+class Settings(BaseSettings):
+    internal_database_url: str | None = Field(default=None, alias="DATABASE_URL")
+    pgdatabase: str | None = Field(default=None, alias="PGDATABASE")
+
+    # Optional Postgres parts with defaults
+    pguser: str = Field(default="postgres", alias="PGUSER")
+    pgpassword: str | None = Field(default=None, alias="PGPASSWORD")
+    pghost: str = Field(default="localhost", alias="PGHOST")
+    pgport: str = Field(default="5432", alias="PGPORT")
 
     model_config = SettingsConfigDict(
         env_file=env_path,
         env_file_encoding="utf-8",
     )
+
+    @property
+    def database_url(self) -> str:
+        if settings.internal_database_url:
+            return settings.internal_database_url
+
+        if not settings.pgdatabase:
+            raise RuntimeError(
+                "Neither DATABASE_URL nor PGDATABASE found in environment"
+            )
+
+        else:
+            password = f":{self.pgpassword}" if self.pgpassword else ""
+        return f"postgresql://{self.pguser}{password}@{self.pghost}:{self.pgport}/{self.pgdatabase}"
 
 
 settings = Settings()
@@ -33,5 +53,5 @@ if not settings.database_url:
 # Stop if tests are not in test environment
 if ENV == "test" and "test" not in settings.database_url:
     raise RuntimeError(
-        f"ENV=test but DATABASE_URL does not point to test DB! Current: {settings.database_url}"
+        f"ENV=test but DATABASE_URL does not point to test DB - current: {settings.database_url}"
     )

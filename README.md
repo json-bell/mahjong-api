@@ -6,12 +6,45 @@ This is a repository for a Mahjong score tracker. The goal is to have the follow
 - Track the score throughout a game by submitting hands
 - Access this through the front-end web app, synced between players here
 
+Placeholders
+
+The live version is hosted on https://mahjong-api.onrender.com/, although the free-tier cold boot can take up to 3 minutes to load - useful initial endpoints include GET `/api` summarising the endpoints, or the OpenAPI auot-generated `/openapi.json` endpoint.
+
+The front end TypeScript React app can be found \_\_\_<!-- TODO -->, with the github profile \_\_\_<!-- TODO --> here
+
 ## How to run locally
 
-First, initialise the venv with
+Firstly, initialise the python virtual environment - on Ubuntu, this is
 
 ```bash
-make venv
+source venv/bin/activate
+```
+
+Then install python dependencies
+
+```bash
+pip install -r requirements.txt
+```
+
+Initialise the dev and test databases with
+
+```bash
+make setup-dbs
+```
+
+Create a file named `.env.test` in the project root with the following content. (You may also specify the PGHOST and PGPORT, or alternatively supply the DATABASE_URL directly)
+
+```env
+# .env.test
+PGDATABASE=mahjong_test
+PGUSER=<yourname>
+PGPASSWORD=<yourpassword>
+
+
+# .env.dev
+PGDATABASE=mahjong
+PGUSER=<yourname>
+PGPASSWORD=<yourpassword>
 ```
 
 then run the local instance via
@@ -23,49 +56,6 @@ make start
 that runs the API on default port 8000.
 
 ---
-
-Placeholders
-
-It is hosted on https://mahjong-api.onrender.com/ - useful initial endpoints include GET `/api` summarising the endpoints, or the OpenAPI auot-generated `/openapi.json` endpoint.
-
-The front end TypeScript React app can be found \_\_\_
-
-### Setting up Dev Postgres
-
-These instructions are for Ubuntu - for Mac, Windows or other OS set up, follow appropriate documentation for installing & initialising PSQL
-
-## Local Development Setup (Ubuntu)
-
-1. **Install PostgreSQL**
-
-```bash
-sudo apt update
-sudo apt install postgresql postgresql-contrib
-sudo service postgresql start
-```
-
-2. **Create a dev user and database**
-
-```bash
-# Switch to the postgres user
-sudo -i -u postgres
-psql
-
-# In the psql prompt - grant appropriate privileges:
-
-CREATE USER mahjong_user WITH PASSWORD 'mahjong_pass'; # or any password you want - change it in the DATABASE_URL below too
-CREATE DATABASE mahjong_dev;
-GRANT ALL PRIVILEGES ON DATABASE mahjong_dev TO mahjong_user;
-
-\q
-exit
-```
-
-3. **Create .env.dev in the project root:**
-
-```env
-DATABASE_URL=postgresql+psycopg2://mahjong_user:mahjong_pass@localhost:5432/mahjong_dev
-```
 
 4. **Run the FastAPI server**
 
