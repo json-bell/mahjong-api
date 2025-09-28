@@ -3,11 +3,27 @@ PYTHON := venv/bin/python
 PIP := venv/bin/pip
 UVICORN := venv/bin/uvicorn
 
+# Default environment
+ENV ?= dev
+
+# Paths to .env files
+ENV_FILE := .env.$(ENV)
+
+# Export ENV so subprocesses know which environment is active
+export ENV
+
+# Load .env file before running commands
+define load_env
+	@echo "Loading environment $(ENV) from $(ENV_FILE)"
+	@export $(shell sed 's/=.*//' $(ENV_FILE))
+endef
+
 # Start the FastAPI server
 start:
-	$(UVICORN) app.main:app --reload
+	@echo "Starting FastAPI in $(ENV) environment..."
+	@export ENV=$(ENV) && $(UVICORN) app.main:app --reload
 
-# Run tests - TODO
+# Run tests
 test:
 	$(PYTHON) -m pytest
 
@@ -34,5 +50,5 @@ check:
 	pre-commit run --all-files
 
 lint:
-	flake8 .
-	mypy .
+	flake8 app tests
+	mypy app tests
