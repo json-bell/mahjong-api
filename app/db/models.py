@@ -1,14 +1,14 @@
 from sqlalchemy import Column, Integer, String, ForeignKey, DateTime
 from sqlalchemy.orm import relationship
 from .base import Base
-from datetime import datetime
+from datetime import datetime, timezone
 
 
 class Game(Base):
     __tablename__ = "games"
 
     id = Column(Integer, primary_key=True, index=True)
-    created_at = Column(DateTime, default=datetime.utcnow)
+    created_at = Column(DateTime, default=datetime.now(timezone.utc))
     hands = relationship("Hand", back_populates="game")
 
 
