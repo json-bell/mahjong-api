@@ -1,7 +1,12 @@
 {
   "api": {
     "GET": {
-      "description": "Serves a JSON representation of all available endpoints"
+      "description": "Serves a summary of available and planned endpoints"
+    }
+  },
+  "openapi.json": {
+    "GET": {
+      "description": "Served an OpenAPI json detailing API endpoints and supported HTTP methods, and corresponding input and output schemas."
     }
   },
   "healthz": {

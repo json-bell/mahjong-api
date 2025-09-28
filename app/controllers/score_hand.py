@@ -6,7 +6,7 @@ from app.services.scoring import calculate_hand_score
 router = APIRouter()
 
 
-@router.post("/score_hand")
+@router.post("/score_hand", operation_id="scoreHand")
 def score_hand_endpoint(hand_schema: HandSchema):
     # Convert schema to domain object
     hand = Hand.from_schema(hand_schema)
