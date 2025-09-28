@@ -12,9 +12,13 @@ ENV = os.getenv("ENV", "dev")  # 'dev', 'test', or 'prod'
 env_path = Path(f".env.{ENV}")
 if env_path.exists():
     load_dotenv(dotenv_path=env_path)
+    print(f"[INFO] Loaded environment variables from {env_path}")
+
 else:
     if ENV == "prod":
-        print("In production, loading system environment variables.")
+        print(
+            "[INFO] Production environment detected, loading system environment variables."
+        )
     else:
         print(
             f"[WARNING] {env_path} not found. Falling back to system environment variables."
