@@ -76,11 +76,11 @@ Alembic is used to keep models and db tables in sync, on changing models then fo
 Compare models to database:
 
 ```bash
-alembic revision --autogenerate -m "<your-message>"
+ENV=prod alembic revision --autogenerate -m "<your-message>"
 ```
 
 Apply changes:
 
 ```bash
-alembic upgrade head
+ENV=prod alembic upgrade head
 ```

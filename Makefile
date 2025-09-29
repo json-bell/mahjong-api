@@ -30,6 +30,26 @@ setup-dbs:
 seed:
 	python -m scripts.seed
 
+# Alembic commands
+migrate:
+ifeq ($(MSG),)
+	$(error MSG is not set. Usage: make migrate MSG="your message" [ENV=dev|prod])
+endif
+	@echo "Creating new migration for $(ENV) with message: $(MSG)"
+	alembic revision --autogenerate -m "$(MSG)"
+
+upgrade:
+	@echo "Upgrading database for $(ENV)..."
+	alembic upgrade head
+
+downgrade:
+	@echo "Downgrading last migration for $(ENV)..."
+	alembic downgrade -1
+
+history:
+	@echo "Showing migration history for $(ENV)..."
+	alembic history --verbose
+
 # ------------------------
 # Run & test
 # ------------------------
