@@ -68,3 +68,19 @@ with optional seeding
 ```bash
 make seed-dbs
 ```
+
+---
+
+Alembic is used to keep models and db tables in sync, on changing models then follow the following steps.
+
+Compare models to database:
+
+```bash
+alembic revision --autogenerate -m "<your-message>"
+```
+
+Apply changes:
+
+```bash
+alembic upgrade head
+```
