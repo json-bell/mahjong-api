@@ -1,14 +1,14 @@
-from sqlalchemy import Column, Integer, String, ForeignKey, DateTime
+from sqlalchemy import Column, Integer, ForeignKey, DateTime, func
 from sqlalchemy.orm import relationship
+from sqlalchemy.dialects.postgresql import JSONB
 from .base import Base
-from datetime import datetime, timezone
 
 
 class Game(Base):
     __tablename__ = "games"
 
     id = Column(Integer, primary_key=True, index=True)
-    created_at = Column(DateTime, default=lambda: datetime.now(timezone.utc))
+    created_at = Column(DateTime(timezone=True), server_default=func.now())
     # wip # score = Column(Integer)
     # wip # round_wind: Column(Enum(WindValueDB, name="wind_enum"), nullable=False)
     # wip # east_player: Column(Integer)
@@ -22,8 +22,9 @@ class Hand(Base):
 
     id = Column(Integer, primary_key=True, index=True)
     game_id = Column(Integer, ForeignKey("games.id"))
-    tiles = Column(String)  # JSON that parses to 4 melds + a pair
-    score = Column(Integer)
+    melds = Column(JSONB, nullable=False)  # JSON that parses to 4 melds
+    pair = Column(JSONB, nullable=False)  # JSON that parses to a tile
+    score = Column(Integer, default=0)
     # wip # player_id = Column(Integer, ForeignKey("players.id"))
     # wip # stuff for history - seat wind, round wind, list of what score increases have been applied
 

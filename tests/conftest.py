@@ -4,7 +4,7 @@ from fastapi.testclient import TestClient
 from app.db.base import Base
 from app.db.session import engine, SessionLocal
 from app.main import app  # your FastAPI app
-from app.db.models import Game
+from app.db.models import Game, Hand
 from app.db.dependencies import get_db
 
 
@@ -29,7 +29,7 @@ def db_engine():
     Base.metadata.drop_all(bind=engine)
 
 
-@pytest.fixture(scope="function")
+@pytest.fixture
 def db_session(db_engine):
     """Create a transactional session for each test."""
     connection = db_engine.connect()
@@ -41,7 +41,7 @@ def db_session(db_engine):
     connection.close()
 
 
-@pytest.fixture(scope="function")
+@pytest.fixture
 def client(db_session):
     def _get_test_db():
         yield db_session
@@ -51,9 +51,54 @@ def client(db_session):
     app.dependency_overrides.clear()
 
 
-@pytest.fixture(scope="function")
-def seed_data(db_session):
+@pytest.fixture
+def seed_game(db_session):
     game = Game()
     db_session.add(game)
     db_session.commit()
     return {"game": game}
+
+
+@pytest.fixture
+def game_factory(db_session):
+    """Returns a factory function to create games for tests."""
+
+    def _create_game(**overrides):
+        defaults = {}
+        defaults.update(overrides)
+        game = Game(**defaults)
+
+        db_session.add(game)
+        db_session.commit()
+        return game
+
+    return _create_game
+
+
+@pytest.fixture
+def example_hand_tiles():
+    return {
+        "melds": [
+            {"type": "chow", "tile": {"suit": "circle", "value": "2"}},
+            {"type": "chow", "tile": {"suit": "circle", "value": "4"}},
+            {"type": "pong", "tile": {"suit": "bamboo", "value": "3"}},
+            {"type": "pong", "tile": {"suit": "bamboo", "value": "6"}},
+        ],
+        "pair": {"suit": "circle", "value": "5"},
+    }
+
+
+@pytest.fixture
+def hand_factory(db_session, example_hand_tiles):
+    """Returns a factory function to create hands for tests."""
+
+    def _create_hand(game_id, **overrides):
+        defaults = {**example_hand_tiles, "game_id": game_id}
+        defaults.update(overrides)
+
+        hand = Hand(**defaults)
+        db_session.add(hand)
+        db_session.commit()
+        return hand
+
+    return _create_hand

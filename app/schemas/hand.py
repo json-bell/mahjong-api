@@ -11,9 +11,12 @@ class HandCreateSchema(BaseModel):
     pair: TileSchema
     game_id: int
 
+    model_config = ConfigDict(from_attributes=True)
+
 
 class HandOutSchema(HandCreateSchema):
     id: int
+    game_id: int
     created_at: Optional[datetime] = None
-
-    model_config = ConfigDict(from_attributes=True)
+    melds: List[MeldSchema]
+    pair: TileSchema

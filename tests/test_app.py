@@ -18,3 +18,8 @@ def test_endpoints():
     with open("app/endpoints.json") as f:
         expected_data = json.load(f)
     assert data == expected_data
+
+
+def test_nonexistent_route_404(client):
+    response = client.get("/banana")
+    assert response.status_code == 404
