@@ -2,7 +2,7 @@ from typing import List
 from app.domain.enums import MeldType
 from app.domain.tile import Tile
 from app.domain.meld import Meld
-from app.schemas.hand import HandSchema
+from app.schemas.hand import HandCreateSchema
 
 
 class Hand:
@@ -34,7 +34,7 @@ class Hand:
                 raise TypeError("All melds must be Meld instances")
 
     @classmethod
-    def from_schema(cls, schema: HandSchema) -> "Hand":
+    def from_schema(cls, schema: HandCreateSchema) -> "Hand":
         melds = [Meld.from_schema(meld) for meld in schema.melds]
         pair = Tile.from_schema(schema.pair)
         return cls(melds, pair)

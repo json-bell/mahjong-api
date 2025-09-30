@@ -1,9 +1,9 @@
-from sqlalchemy.orm import Session
+from sqlalchemy.orm import Session, joinedload
 from app.db import models
-from app.schemas.game import GameSchema
+from app.schemas.game import GameCreateSchema
 
 
-def create_game(game: GameSchema, db: Session):
+def create_game(game: GameCreateSchema, db: Session):
     db_game = models.Game()
     db.add(db_game)
     db.commit()
@@ -12,7 +12,12 @@ def create_game(game: GameSchema, db: Session):
 
 
 def get_game_by_id(db: Session, game_id: int):
-    return db.query(models.Game).filter(models.Game.id == game_id).first()
+    return (
+        db.query(models.Game)
+        .options(joinedload(models.Game.hands))
+        .filter(models.Game.id == game_id)
+        .first()
+    )
 
 
 def list_games(db: Session):

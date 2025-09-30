@@ -1,9 +1,9 @@
 from sqlalchemy.orm import Session
 from app.db import models
-from app.schemas.hand import HandSchema
+from app.schemas.hand import HandCreateSchema
 
 
-def create_hand(db: Session, hand_data: HandSchema, game_id: int):
+def create_hand(db: Session, hand_data: HandCreateSchema, game_id: int):
     db_hand = models.Hand(**hand_data.dict(), game_id=game_id)
     db.add(db_hand)
     db.commit()

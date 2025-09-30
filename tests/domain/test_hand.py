@@ -3,7 +3,7 @@ from app.domain.enums import Suit, NumberValue, MeldType
 from app.domain.tile import Tile
 from app.domain.meld import Meld
 from app.domain.hand import Hand
-from app.schemas.hand import HandSchema
+from app.schemas.hand import HandCreateSchema
 from app.schemas.meld import MeldSchema
 from app.schemas.tile import TileSchema
 
@@ -26,7 +26,7 @@ def hand_schema_fixture(number_tile, meld_fixture):
     # Create HandSchema with 4 melds and a pair
     tile_schema = TileSchema(suit=number_tile.suit, value=number_tile.value)
     meld_schemas = [MeldSchema(type=MeldType.CHOW, tile=tile_schema) for _ in range(4)]
-    return HandSchema(melds=meld_schemas, pair=tile_schema)
+    return HandCreateSchema(melds=meld_schemas, pair=tile_schema, game_id=1)
 
 
 # ----------------------

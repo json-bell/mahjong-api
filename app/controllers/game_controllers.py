@@ -3,18 +3,18 @@ from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from app.db.dependencies import get_db
 from app.db.crud import game as game_crud
-from app.schemas.game import GameSchema, GameOutSchema
+from app.schemas.game import GameCreateSchema, GameOutSchema, GameDetailSchema
 
 router = APIRouter(prefix="/games", tags=["games"])
 
 
 @router.post("/", response_model=GameOutSchema, operation_id="createGame")
-def create_game(game: GameSchema, db: Session = Depends(get_db)):
+def create_game(game: GameCreateSchema, db: Session = Depends(get_db)):
     """Creates and returns a game."""
     return game_crud.create_game(game, db)
 
 
-@router.get("/{game_id}", response_model=GameOutSchema, operation_id="readGameById")
+@router.get("/{game_id}", response_model=GameDetailSchema, operation_id="readGameById")
 def read_game_by_id(game_id: int, db: Session = Depends(get_db)):
     """Retrieve a single game by its ID."""
     db_game = game_crud.get_game_by_id(db, game_id)

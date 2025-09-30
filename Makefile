@@ -68,7 +68,8 @@ check: ## Run pre-commit checks
 
 lint: ## Run linters
 	flake8 app tests
-	mypy app tests
+	mypy app tests --ignore-missing-imports
+
 
 # ------------------------
 # Utilities
