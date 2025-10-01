@@ -25,12 +25,14 @@ install-precommit: ## Setup pre-commit hooks
 # Database
 # ------------------------
 setup-dbs:
-	psql -f ./app/db/setup_dbs.sql
+	psql -f ./scripts/setup-dbs.sql
 
 seed:
 	python -m scripts.seed
 
+# ------------------------
 # Alembic commands
+# ------------------------
 migrate:
 ifeq ($(MSG),)
 	$(error MSG is not set. Usage: make migrate MSG="your message" [ENV=dev|prod])

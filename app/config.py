@@ -41,6 +41,10 @@ class Settings(BaseSettings):
     )
 
     @property
+    def env(self) -> str:
+        return ENV
+
+    @property
     def database_url(self) -> str:
         if settings.internal_database_url:
             return settings.internal_database_url

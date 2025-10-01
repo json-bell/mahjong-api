@@ -47,6 +47,12 @@ PGUSER=<yourname>
 PGPASSWORD=<yourpassword>
 ```
 
+Optionally seed the databases
+
+```bash
+make seed-dbs
+```
+
 then run the local instance via
 
 ```bash
@@ -57,30 +63,16 @@ that runs the API on default port 8000.
 
 ---
 
-4. **Run the FastAPI server**
-
-```bash
-make start
-```
-
-with optional seeding
-
-```bash
-make seed-dbs
-```
-
----
-
 Alembic is used to keep models and db tables in sync, on changing models then follow the following steps.
 
 Compare models to database:
 
 ```bash
-ENV=prod alembic revision --autogenerate -m "<your-message>"
+make migrate MSG="<your update message>"
 ```
 
 Apply changes:
 
 ```bash
-ENV=prod alembic upgrade head
+ENV=prod make upgrade
 ```
