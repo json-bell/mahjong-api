@@ -1,5 +1,7 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import JSONResponse
+from app.domain.exceptions import MahjongError
 from pathlib import Path
 import json
 from app.controllers import game_controllers, hand_controllers
@@ -17,6 +19,12 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+
+@app.exception_handler(MahjongError)
+async def mahjong_error_handler(request: Request, exc: MahjongError):
+    return JSONResponse(content=exc.to_dict(), status_code=400)
+
 
 app.include_router(hand_controllers.router)
 app.include_router(game_controllers.router)

@@ -6,6 +6,7 @@ from app.domain.hand import Hand
 from app.schemas.hand import HandCreateSchema
 from app.schemas.meld import MeldSchema
 from app.schemas.tile import TileSchema
+from app.domain.exceptions import InvalidTileError, InvalidMeldError, InvalidHandError
 
 
 # ----------------------
@@ -41,15 +42,15 @@ def test_hand_init_valid(meld_fixture, number_tile):
 
 def test_hand_validate_errors(number_tile, meld_fixture):
     # Fewer than 4 melds
-    with pytest.raises(ValueError):
+    with pytest.raises(InvalidHandError):
         Hand([meld_fixture] * 3, number_tile)
 
     # Pair not a Tile
-    with pytest.raises(TypeError):
+    with pytest.raises(InvalidTileError):
         Hand([meld_fixture] * 4, "not_a_tile")
 
     # Meld not a Meld instance
-    with pytest.raises(TypeError):
+    with pytest.raises(InvalidMeldError):
         Hand(["not_a_meld"] * 4, number_tile)
 
 

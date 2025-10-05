@@ -4,6 +4,7 @@ from app.domain.tile import Tile
 from app.domain.meld import Meld
 from app.schemas.tile import TileSchema
 from app.schemas.meld import MeldSchema
+from app.domain.exceptions import InvalidMeldError, InvalidTileError
 
 
 # ----------------------
@@ -59,18 +60,18 @@ def test_meld_label_property_non_chow(base_tile):
 
 def test_meld_validate_errors(base_tile, honour_tile):
     # tile not a Tile instance
-    with pytest.raises(TypeError):
+    with pytest.raises(InvalidTileError):
         Meld(MeldType.CHOW, "not_a_tile")
 
     # Chow with honour tile should raise ValueError
-    with pytest.raises(ValueError):
+    with pytest.raises(InvalidMeldError):
         Meld(MeldType.CHOW, honour_tile)
 
     # Chow starting with 8 or 9 should raise ValueError
     tile8 = Tile(Suit.CIRCLE, NumberValue.EIGHT)
     tile9 = Tile(Suit.CIRCLE, NumberValue.NINE)
     for tile in (tile8, tile9):
-        with pytest.raises(ValueError):
+        with pytest.raises(InvalidMeldError):
             Meld(MeldType.CHOW, tile)
 
 

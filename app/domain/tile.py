@@ -6,6 +6,7 @@ from app.domain.enums import (
     WindValue,
 )
 from app.schemas.tile import TileSchema
+from app.domain.exceptions import InvalidTileError
 
 
 class Tile:
@@ -26,10 +27,10 @@ class Tile:
     @property
     def chow_sequence(self) -> str:
         if not isinstance(self.value, NumberValue):
-            raise TypeError("Honour tiles cannot form chows")
+            raise InvalidTileError("Honour tiles cannot form chows", tile=self)
 
         if self.value in (NumberValue.EIGHT, NumberValue.NINE):
-            raise ValueError(f"Chows cannot be made starting from {self.value.number}")
+            raise InvalidTileError("Chows must start from 1-7", tile=self)
 
         return "-".join([str(i + self.value.number) for i in [0, 1, 2]])
 
@@ -38,18 +39,24 @@ class Tile:
         value = self.value
 
         if not isinstance(suit, Suit):
-            raise TypeError("suit must be a Suit enum")
+            raise InvalidTileError(
+                f"Suit must have value in {Suit.values()}", suit=suit
+            )
         if suit == Suit.WIND and not isinstance(value, WindValue):
-            raise ValueError(f"Wind suit tiles must have value in {WindValue.values()}")
+            raise InvalidTileError(
+                f"Wind suit tiles must have value in {WindValue.values()}", tile=self
+            )
         elif suit == Suit.DRAGON and not isinstance(value, DragonValue):
-            raise ValueError(
-                f"Dragon suit tiles must have value in {DragonValue.values()}"
+            raise InvalidTileError(
+                f"Dragon suit tiles must have value in {DragonValue.values()}",
+                tile=self,
             )
         elif suit in (Suit.BAMBOO, Suit.CHARACTER, Suit.CIRCLE) and not isinstance(
             value, NumberValue
         ):
-            raise ValueError(
-                f"{suit.label} suit tiles must have value in {NumberValue.values()}"
+            raise InvalidTileError(
+                f"{suit.label} suit tiles must have value in {NumberValue.values()}",
+                tile=self,
             )
 
     @classmethod

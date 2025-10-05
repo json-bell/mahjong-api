@@ -2,6 +2,7 @@ from typing import List
 from app.domain.enums import MeldType
 from app.domain.tile import Tile
 from app.domain.meld import Meld
+from app.domain.exceptions import InvalidTileError, InvalidMeldError, InvalidHandError
 from app.schemas.hand import HandCreateSchema
 
 
@@ -26,12 +27,16 @@ class Hand:
 
     def _validate(self):
         if len(self.melds) != 4:
-            raise ValueError(f"A hand must have exactly 4 melds, got {len(self.melds)}")
+            raise InvalidHandError(
+                "A hand must have exactly 4 melds.", length=len(self.melds), hand=self
+            )
         if not isinstance(self.pair, Tile):
-            raise TypeError("pair must be a Tile instance")
+            raise InvalidTileError("Pair must have a suit and value", pair=self.pair)
         for meld in self.melds:
             if not isinstance(meld, Meld):
-                raise TypeError("All melds must be Meld instances")
+                raise InvalidMeldError(
+                    "All melds must be have a tile and type", meld=meld
+                )
 
     @classmethod
     def from_schema(cls, schema: HandCreateSchema) -> "Hand":

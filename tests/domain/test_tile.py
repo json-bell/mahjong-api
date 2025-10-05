@@ -2,6 +2,7 @@ import pytest
 from app.domain.tile import Tile
 from app.domain.enums import Suit, NumberValue, DragonValue, WindValue
 from app.schemas.tile import TileSchema
+from app.domain.exceptions import InvalidTileError
 
 
 # ----------------------
@@ -60,36 +61,34 @@ def test_chow_sequence_valid(number_tile):
 
 
 def test_chow_sequence_errors():
-    # Honour tile should raise TypeError
     wind = Tile(Suit.WIND, WindValue.NORTH)
     dragon = Tile(Suit.DRAGON, DragonValue.GREEN)
     for tile in (wind, dragon):
-        with pytest.raises(TypeError):
+        with pytest.raises(InvalidTileError):
             _ = tile.chow_sequence
 
-    # NumberValue.EIGHT or NINE should raise ValueError
     tile8 = Tile(Suit.CIRCLE, NumberValue.EIGHT)
     tile9 = Tile(Suit.CIRCLE, NumberValue.NINE)
     for tile in (tile8, tile9):
-        with pytest.raises(ValueError):
+        with pytest.raises(InvalidTileError):
             _ = tile.chow_sequence
 
 
 def test_validate_errors():
     # Invalid suit type
-    with pytest.raises(TypeError):
+    with pytest.raises(InvalidTileError):
         Tile("circle", NumberValue.ONE)  # suit must be Suit enum
 
     # Wrong value type for wind
-    with pytest.raises(ValueError):
+    with pytest.raises(InvalidTileError):
         Tile(Suit.WIND, NumberValue.ONE)
 
     # Wrong value type for dragon
-    with pytest.raises(ValueError):
+    with pytest.raises(InvalidTileError):
         Tile(Suit.DRAGON, NumberValue.TWO)
 
     # Wrong value type for number suit
-    with pytest.raises(ValueError):
+    with pytest.raises(InvalidTileError):
         Tile(Suit.CIRCLE, DragonValue.RED)
 
 

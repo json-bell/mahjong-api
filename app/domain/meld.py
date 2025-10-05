@@ -1,6 +1,7 @@
 from app.domain.enums import MeldType, NumberValue
 from app.domain.tile import Tile
 from app.schemas.meld import MeldSchema
+from app.domain.exceptions import InvalidTileError, InvalidMeldError
 
 
 class Meld:
@@ -15,7 +16,9 @@ class Meld:
         if self.type != MeldType.CHOW:
             return f"{self.tile.label} {self.type.label}"
         if not isinstance(self.type, MeldType):
-            raise TypeError("type must be a MeldType enum")
+            raise InvalidMeldError(
+                f"Meld type must have a value in {MeldType.values()}", type=self.type
+            )
         else:
             return f"{self.tile.chow_sequence} {self.tile.suit.label} Chow"
 
@@ -24,14 +27,16 @@ class Meld:
         type = self.type
 
         if not isinstance(self.tile, Tile):
-            raise TypeError("The tile must be a Tile instance")
+            raise InvalidTileError("Tile is missing suit or value.", tile=tile)
+
         if type == MeldType.CHOW:
             if tile.value in (NumberValue.EIGHT, NumberValue.NINE):
-                raise ValueError(
-                    "Chow's value is the lowest number value (7-8-9 is recorded as 7)"
+                raise InvalidMeldError(
+                    "A chow's value is the lowest number value (7-8-9 is recorded as 7).",
+                    meld=self,
                 )
             elif tile.is_honour:
-                raise ValueError("Honour tiles cannot form chows")
+                raise InvalidMeldError("Honour tiles cannot form chows.", meld=self)
 
     @classmethod
     def from_schema(cls, schema: MeldSchema) -> "Meld":
