@@ -45,6 +45,7 @@ PGPASSWORD=<yourpassword>
 PGDATABASE=mahjong
 PGUSER=<yourname>
 PGPASSWORD=<yourpassword>
+FRONTEND_URL=<yourfrontend> # if also running a local instance of the frontend app (for CORS)
 ```
 
 Optionally seed the databases

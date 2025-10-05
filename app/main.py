@@ -1,10 +1,22 @@
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 from pathlib import Path
 import json
 from app.controllers import game_controllers, hand_controllers
+from app.config import settings
 
 
 app = FastAPI(title="Mahjong Score Tracker")
+
+origins = [settings.frontend_url] if settings.frontend_url else []
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 app.include_router(hand_controllers.router)
 app.include_router(game_controllers.router)

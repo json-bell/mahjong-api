@@ -35,6 +35,8 @@ class Settings(BaseSettings):
     pghost: str = Field(default="localhost", alias="PGHOST")
     pgport: str = Field(default="5432", alias="PGPORT")
 
+    frontend_url: str | None = Field(default=None, alias="FRONTEND_URL")
+
     model_config = SettingsConfigDict(
         env_file=env_path,
         env_file_encoding="utf-8",
@@ -63,8 +65,14 @@ settings = Settings()
 if not settings.database_url:
     raise RuntimeError("DATABASE_URL is missing from your environment")
 
-# Stop if tests are not in test environment
 if ENV == "test" and "test" not in settings.database_url:
     raise RuntimeError(
         f"ENV=test but DATABASE_URL does not point to test DB - current: {settings.database_url}"
     )
+
+if (
+    settings.env == "production"
+    and settings.frontend_url
+    and "localhost" in settings.frontend_url
+):
+    raise RuntimeError("Cannot allow localhost as frontend URL in production!")
