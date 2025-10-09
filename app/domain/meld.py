@@ -38,6 +38,9 @@ class Meld:
             elif tile.is_honour:
                 raise InvalidMeldError("Honour tiles cannot form chows.", meld=self)
 
+    def to_dict(self):
+        return {"type": self.type.value, "tile": self.tile.to_dict()}
+
     @classmethod
     def from_schema(cls, schema: MeldSchema) -> "Meld":
         return cls(schema.type, Tile.from_schema(schema.tile))

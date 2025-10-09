@@ -59,6 +59,9 @@ class Tile:
                 tile=self,
             )
 
+    def to_dict(self):
+        return {"suit": self.suit.value, "tile": self.value.value}
+
     @classmethod
     def from_schema(cls, schema: TileSchema) -> "Tile":
         return cls(schema.suit, schema.value)

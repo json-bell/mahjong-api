@@ -3,7 +3,7 @@ from app.db import models
 from app.schemas.game import GameCreateSchema
 
 
-def create_game(game: GameCreateSchema, db: Session):
+def create_game(db: Session, game: GameCreateSchema):
     db_game = models.Game()
     db.add(db_game)
     db.commit()

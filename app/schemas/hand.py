@@ -9,7 +9,6 @@ from app.schemas.tile import TileSchema
 class HandCreateSchema(BaseModel):
     melds: List[MeldSchema]
     pair: TileSchema
-    game_id: int
 
     model_config = ConfigDict(from_attributes=True)
 

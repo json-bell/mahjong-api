@@ -18,9 +18,17 @@ class MahjongError(Exception):
         """
         error_dict = {"error": {"code": self.code, "message": self.message}}
         if self.details:
-            # Convert all values to strings for safety
+
+            def serialize_value(v):
+                if v is None:
+                    return None
+                elif hasattr(v, "to_dict") and callable(v.to_dict):
+                    return v.to_dict()
+                else:
+                    return str(v)
+
             error_dict["error"]["details"] = {
-                k: str(v) for k, v in self.details.items() if v is not None
+                k: serialize_value(v) for k, v in self.details.items() if v is not None
             }
         return error_dict
 

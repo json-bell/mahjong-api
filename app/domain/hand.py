@@ -38,6 +38,12 @@ class Hand:
                     "All melds must be have a tile and type", meld=meld
                 )
 
+    def to_dict(self):
+        return {
+            "melds": [meld.to_dict() for meld in self.melds],
+            "pair": self.pair.to_dict(),
+        }
+
     @classmethod
     def from_schema(cls, schema: HandCreateSchema) -> "Hand":
         melds = [Meld.from_schema(meld) for meld in schema.melds]
