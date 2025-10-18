@@ -39,6 +39,7 @@ class AllKongsRule(ScoringRule):
             slug=RuleSlug.ALL_KONGS,
             description="All melds are chows.",
             score_value=13,
+            supersedes=[RuleSlug.ALL_PUNGS],
         )
 
     def matches(self, hand: Hand) -> bool:

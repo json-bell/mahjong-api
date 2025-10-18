@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
-from dataclasses import dataclass
-from typing import Dict
+from dataclasses import dataclass, field
+from typing import Dict, List
 from .enums import RuleSlug
 from app.domain.hand import Hand
 
@@ -10,6 +10,7 @@ class ScoringRule(ABC):
     slug: RuleSlug
     description: str
     score_value: int
+    supersedes: List[RuleSlug] = field(default_factory=list)
 
     @abstractmethod
     def matches(self, hand: Hand) -> bool:
