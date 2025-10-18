@@ -82,3 +82,21 @@ def test_meld_from_schema(meld_schema):
     assert isinstance(meld.tile, Tile)
     assert meld.tile.suit == meld_schema.tile.suit
     assert meld.tile.value == meld_schema.tile.value
+
+
+def test_chow_meld_from_short():
+    meld = Meld.from_short("CBa5")
+    assert isinstance(meld, Meld)
+    assert meld.type == MeldType.CHOW
+    assert isinstance(meld.tile, Tile)
+    assert meld.tile.suit == Suit.BAMBOO
+    assert meld.tile.value == NumberValue.FIVE
+
+
+def test_pong_meld_from_short():
+    meld = Meld.from_short("PWiW")
+    assert isinstance(meld, Meld)
+    assert meld.type == MeldType.PONG
+    assert isinstance(meld.tile, Tile)
+    assert meld.tile.suit == Suit.WIND
+    assert meld.tile.value == WindValue.WEST

@@ -75,3 +75,19 @@ def test_hand_from_schema(hand_schema_fixture):
     assert len(hand.melds) == 4
     assert isinstance(hand.pair, Tile)
     assert all(isinstance(m, Meld) for m in hand.melds)
+
+
+def test_hand_from_short():
+    hand = Hand.from_short(melds=["CBa4", "KDrG", "PWiE", "CCh2"], pair="DrR")
+    assert isinstance(hand, Hand)
+    assert len(hand.melds) == 4
+    assert isinstance(hand.pair, Tile)
+    assert all(isinstance(m, Meld) for m in hand.melds)
+    assert ([meld.tile.suit.value for meld in hand.melds]) == (
+        [
+            Suit.BAMBOO.value,
+            Suit.DRAGON.value,
+            Suit.WIND.value,
+            Suit.CHARACTER.value,
+        ]
+    )

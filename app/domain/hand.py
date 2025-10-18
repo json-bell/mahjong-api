@@ -49,3 +49,9 @@ class Hand:
         melds = [Meld.from_schema(meld) for meld in schema.melds]
         pair = Tile.from_schema(schema.pair)
         return cls(melds, pair)
+
+    @classmethod
+    def from_short(cls, melds: List[str], pair: str):
+        from app.domain.mahjong_factory import MahjongFactory
+
+        return MahjongFactory.hand_from_short(melds, pair)

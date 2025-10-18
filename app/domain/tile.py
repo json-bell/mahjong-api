@@ -65,3 +65,9 @@ class Tile:
     @classmethod
     def from_schema(cls, schema: TileSchema) -> "Tile":
         return cls(schema.suit, schema.value)
+
+    @classmethod
+    def from_short(cls, code: str):
+        from app.domain.mahjong_factory import MahjongFactory
+
+        return MahjongFactory.tile_from_short(code)
