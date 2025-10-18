@@ -1,5 +1,6 @@
 from app.domain.scoring.rule import RULES, ScoringRule
 from app.domain.hand import Hand
+from app.domain.scoring.types import RuleExplanation
 
 # Registers all rules
 import app.domain.scoring.rules  # noqa: F401
@@ -31,11 +32,12 @@ class ScoringEngine:
         total_score = sum(r.score_value for r in applied_rules)
         return total_score
 
-    def explain_hand(self, hand: Hand):
+    def explain_hand(self, hand: Hand) -> list[RuleExplanation]:
         return [
             {
-                "slug": rule.slug.value,
-                "value": rule.score_value,
+                "slug": rule.slug,
+                "name": rule.slug.value.replace("_", " ").title(),
+                "score": rule.score_value,
                 "description": rule.description,
             }
             for rule in self.applied_rules(hand)
