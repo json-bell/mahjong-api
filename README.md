@@ -6,11 +6,17 @@ This is a repository for a Mahjong score tracker. The goal is to have the follow
 - Track the score throughout a game by submitting hands
 - Access this through the front-end web app, synced between players here
 
-Placeholders
+# About the App
+
+Mahjong has many different scoring systems, and variations on the scoring within each system too. This app uses the Hong-Kong Old Style rules - see a full description of this scoring ruleset at http://mahjong.wikidot.com/rules:hong-kong-old-style-scoring
 
 The live version is hosted on https://mahjong-api.onrender.com/, although the free-tier cold boot can take up to 3 minutes to load - useful initial endpoints include GET `/api` summarising the endpoints, or the OpenAPI auot-generated `/openapi.json` endpoint.
 
 The front end TypeScript React app can be found \_\_\_<!-- TODO -->, with the github profile \_\_\_<!-- TODO --> here
+
+# About the Repository
+
+I implemented Domain-Driven Design, separating out the different logical parts of the app: `\domain\` for logic relating directly to Mahjong hands and scoring rules, `\schemas` for defining API-related types and classes that integrate smoothly with `openapi`'s auto-generated types (accessed [here](https://mahjong-api.onrender.com/openapi.json))
 
 ## How to run locally
 
