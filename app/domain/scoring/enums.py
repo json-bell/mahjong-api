@@ -21,12 +21,12 @@ class RuleSlug(LabelledEnum):
     ALL_SEASONS = "all_seasons"
     # 3 fan
     ALL_PUNGS = "all_pungs"  # set-based
-    HALF_FLUSH = "half_flush"
+    HALF_FLUSH = "half_flush"  # suit-based
     # 4 fan
     LITTLE_THREE_DRAGONS = "little_three_dragons"
     SEVEN_PAIRS = "seven_pairs"
     # 6 fan
-    FULL_FLUSH = "full_flush"
+    FULL_FLUSH = "full_flush"  # suit-based
     # limit
     FOUR_CONCEALED_PUNGS = "four_concealed_pungs"
     BIG_THREE_DRAGONS = "big_three_dragons"

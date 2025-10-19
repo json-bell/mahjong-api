@@ -83,3 +83,11 @@ Apply changes:
 ```bash
 ENV=prod make upgrade
 ```
+
+### Development & contributors
+
+Initialise pre-commit with
+
+```bash
+ make install-precommit
+```
