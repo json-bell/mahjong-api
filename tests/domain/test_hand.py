@@ -61,11 +61,13 @@ def test_hand_label_property(meld_fixture, number_tile):
     assert hand.label == expected
 
 
-def test_hand_suits_and_chow_count(meld_fixture, number_tile):
+def test_hand_suits(meld_fixture, number_tile):
     hand = Hand([meld_fixture] * 4, number_tile)
-    # All melds use the same suit
-    assert hand.suits == [meld_fixture.tile.suit]
-    # All melds are chow
+    assert hand.suits == [meld_fixture.tile.suit for _ in range(5)]
+
+
+def test_hand_chow_count(meld_fixture, number_tile):
+    hand = Hand([meld_fixture] * 4, number_tile)
     assert hand.chow_count == 4
 
 

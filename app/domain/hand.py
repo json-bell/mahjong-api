@@ -1,5 +1,5 @@
 from typing import List
-from app.domain.enums import MeldType
+from app.domain.enums import MeldType, Suit
 from app.domain.tile import Tile
 from app.domain.meld import Meld
 from app.domain.exceptions import InvalidTileError, InvalidMeldError, InvalidHandError
@@ -18,8 +18,8 @@ class Hand:
         return f"{meld_descriptions} and a pair of {self.pair.label}"
 
     @property
-    def suits(self) -> List[str]:
-        return list(set([meld.tile.suit for meld in self.melds]))
+    def suits(self) -> list[Suit]:
+        return [*[meld.tile.suit for meld in self.melds], self.pair.suit]
 
     @property
     def chow_count(self) -> int:
