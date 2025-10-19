@@ -5,7 +5,7 @@ import pytest
 
 
 @pytest.mark.parametrize(
-    "melds, pair, expected_slug, expected_score",
+    "melds, pair, expected_only_slug, expected_score",
     [
         (["CCi2", "CCi4", "CBa3", "CBa6"], "DrG", RuleSlug.ALL_CHOWS, 1),
         (["PCi2", "PCi4", "PBa3", "PBa6"], "DrG", RuleSlug.ALL_PUNGS, 3),
@@ -13,7 +13,7 @@ import pytest
         (["KCi2", "KCi4", "KBa3", "KBa6"], "DrG", RuleSlug.ALL_KONGS, 13),
     ],
 )
-def test_basic_rules(melds, pair, expected_slug, expected_score):
+def test_basic_rules(melds, pair, expected_only_slug, expected_score):
     hand = Hand.from_short(melds=melds, pair=pair)
     engine = ScoringEngine()
     score = engine.score_hand(hand)
@@ -21,7 +21,7 @@ def test_basic_rules(melds, pair, expected_slug, expected_score):
 
     assert score == expected_score
     slugs = [rule["slug"] for rule in explanation]
-    assert [expected_slug] == slugs
+    assert [expected_only_slug] == slugs
 
 
 def test_all_kongs_rule():

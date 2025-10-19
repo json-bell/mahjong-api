@@ -1,7 +1,7 @@
 from app.domain.scoring.rule import ScoringRule, register_rule
 from app.domain.scoring.enums import RuleSlug
 from app.domain.hand import Hand
-from app.domain.enums import Suit
+from app.domain.enums import Suit, DragonValue, MeldType
 
 
 class HalfFlushRule(ScoringRule):
@@ -37,3 +37,38 @@ class FullFlushRule(ScoringRule):
 
 
 register_rule(FullFlushRule())
+
+
+class JadeDragon(ScoringRule):
+    def __init__(self):
+        super().__init__(
+            slug=RuleSlug.JADE_DRAGON,
+            description="Hand is composed of pungs (or kongs) of bamboo tiles and a pung of green dragons.",
+            score_value=13,
+            supersedes=[RuleSlug.HALF_FLUSH, RuleSlug.ALL_PUNGS, RuleSlug.ALL_KONGS],
+        )
+
+    def matches(self, hand: Hand) -> bool:
+        suits = set(hand.suits)
+        # Suits are Bamboo & Dragon
+        if suits != {Suit.BAMBOO, Suit.DRAGON}:
+            return False
+
+        # Dragon melds are exactly Green Dragon
+        dragon_meld_values = [
+            meld.tile.value for meld in hand.melds if meld.tile.suit == Suit.DRAGON
+        ]
+        if dragon_meld_values != [DragonValue.GREEN]:
+            return False
+
+        if any(meld.type == MeldType.CHOW for meld in hand.melds):
+            return False
+
+        # Pair is bamboo
+        if hand.pair.suit != Suit.BAMBOO:
+            return False
+
+        return True
+
+
+register_rule(JadeDragon())
