@@ -17,8 +17,10 @@ class ScoringRule(ABC):
         """Check whether this rule applies to the hand."""
         raise NotImplementedError
 
-    def score(self, hand: Hand) -> int:
-        return self.score_value if self.matches(hand) else 0
+    def score_fan(self, hand: Hand, matched: bool | None = None) -> int:
+        if matched is None:
+            matched = self.matches(hand)
+        return self.score_value if matched else 0
 
 
 RULES: Dict[RuleSlug, ScoringRule] = {}

@@ -8,7 +8,7 @@ class RuleSlug(LabelledEnum):
     SEAT_FLOWER = "seat_flower"
     SEAT_SEASON = "seat_season"
     ALL_CHOWS = "all_chows"  # set-based
-    DRAGON_PUNG = "dragon_pung"
+    DRAGON_PUNG = "dragon_pung"  # Terminals/Honors
     SEAT_WIND = "seat_wind"
     PREVALENT_WIND = "prevalent_wind"
     SELF_DRAWN_WIN = "self_drawn_win"
@@ -37,8 +37,8 @@ class RuleSlug(LabelledEnum):
     NINE_GATES = "nine_gates"
     THIRTEEN_ORPHANS = "thirteen_orphans"
     ALL_KONGS = "all_kongs"  # set-based
-    JADE_DRAGON = "jade_dragon"
-    RUBY_DRAGON = "ruby_dragon"
-    PEARL_DRAGON = "pearl_dragon"
+    JADE_DRAGON = "jade_dragon"  # suit-based
+    RUBY_DRAGON = "ruby_dragon"  # suit-based
+    PEARL_DRAGON = "pearl_dragon"  # suit-based
     BLESSING_OF_HEAVEN = "blessing_of_heaven"
     BLESSING_OF_EARTH = "blessing_of_earth"

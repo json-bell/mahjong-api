@@ -4,7 +4,7 @@ from fastapi.responses import JSONResponse
 from app.domain.exceptions import MahjongError
 from pathlib import Path
 import json
-from app.controllers import game_controllers, hand_controllers
+from app.controllers import game_controllers, hand_controllers, score_controllers
 from app.config import settings
 
 
@@ -28,6 +28,7 @@ async def mahjong_error_handler(request: Request, exc: MahjongError):
 
 app.include_router(hand_controllers.router)
 app.include_router(game_controllers.router)
+app.include_router(score_controllers.router)
 
 
 BASE_DIR = Path(__file__).resolve().parent
