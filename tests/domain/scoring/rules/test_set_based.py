@@ -7,7 +7,7 @@ import pytest
 @pytest.mark.parametrize(
     "melds, pair, expected_only_slug, expected_score",
     [
-        (["CCi2", "CCi4", "CBa3", "CBa6"], "DrG", RuleSlug.ALL_CHOWS, 1),
+        (["CCi2", "CCi4", "CBa3", "CBa6"], "Ch3", RuleSlug.ALL_CHOWS, 1),
         (["PCi2", "PCi4", "PBa3", "PBa6"], "DrG", RuleSlug.ALL_PUNGS, 3),
         (["PCi2", "KCi4", "PBa3", "KBa6"], "DrG", RuleSlug.ALL_PUNGS, 3),
         (["KCi2", "KCi4", "KBa3", "KBa6"], "DrG", RuleSlug.ALL_KONGS, 13),
@@ -42,3 +42,14 @@ def test_all_kongs_rule():
     assert RuleSlug.ALL_PUNGS not in slugs
     assert [RuleSlug.ALL_KONGS] == slugs
     assert score == 13
+
+
+def test_all_chows_requires_suit_pair():
+    hand = Hand.from_short(melds=["CCi2", "CCi4", "CBa3", "CBa6"], pair="DrG")
+    engine = ScoringEngine()
+    score = engine.score_hand(hand)
+    applied_rules = engine.applied_rules(hand)
+    slugs = [rule.slug for rule in applied_rules]
+
+    assert RuleSlug.ALL_CHOWS not in slugs
+    assert score == 0

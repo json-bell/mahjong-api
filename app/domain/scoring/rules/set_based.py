@@ -22,11 +22,13 @@ class AllChowsRule(ScoringRule):
     def __init__(self):
         super().__init__(
             slug=RuleSlug.ALL_CHOWS,
-            description="All melds are chows.",
+            description="Hand consists only of chows and a pair of suit tiles.",
             score_value=1,
         )
 
     def matches(self, hand: Hand) -> bool:
+        if hand.pair.is_honour:
+            return False
         return all(meld.type == "chow" for meld in hand.melds)
 
 
@@ -44,8 +46,6 @@ class AllKongsRule(ScoringRule):
 
     def matches(self, hand: Hand) -> bool:
         return all(meld.type == "kong" for meld in hand.melds)
-
-    # TODO MAH-19
 
 
 register_rule(AllKongsRule())
