@@ -45,7 +45,12 @@ class DragonSuitRule(ScoringRule):
             slug=slug,
             description=description,
             score_value=13,
-            supersedes=[RuleSlug.HALF_FLUSH, RuleSlug.ALL_PUNGS, RuleSlug.ALL_KONGS],
+            supersedes=[
+                RuleSlug.HALF_FLUSH,
+                RuleSlug.ALL_PUNGS,
+                RuleSlug.ALL_KONGS,
+                RuleSlug.DRAGON_PUNG,
+            ],
         )
         self.suit = suit
         self.dragon_value = dragon_value
