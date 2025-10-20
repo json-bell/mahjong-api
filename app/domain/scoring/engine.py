@@ -29,7 +29,7 @@ class ScoringEngine:
     def score_hand(self, hand: Hand) -> int:
         applied_rules = self.applied_rules(hand)
 
-        total_score = sum(r.score_value for r in applied_rules)
+        total_score = sum(r.score_fan(hand, matched=True) for r in applied_rules)
         return total_score
 
     def explain_hand(self, hand: Hand) -> list[RuleExplanation]:

@@ -15,7 +15,7 @@ class DragonPungRule(ScoringRule):
     def matches(self, hand: Hand) -> bool:
         return any(meld.tile.suit == Suit.DRAGON for meld in hand.melds)
 
-    def score(self, hand: Hand) -> int:
+    def score_fan(self, hand: Hand, matched: bool | None = None) -> int:
         return len([meld for meld in hand.melds if meld.tile.suit == Suit.DRAGON])
 
 

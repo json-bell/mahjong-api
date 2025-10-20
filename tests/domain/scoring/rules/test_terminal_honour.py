@@ -8,6 +8,8 @@ import pytest
     "melds, pair, expected_only_slug, expected_score",
     [
         (["CCi2", "CBa4", "PBa3", "PDrR"], "Ch3", RuleSlug.DRAGON_PUNG, 1),
+        (["CCi2", "CBa4", "PDrG", "PDrR"], "Ch3", RuleSlug.DRAGON_PUNG, 2),
+        (["PDrW", "CBa4", "PDrG", "PDrR"], "Ch3", RuleSlug.DRAGON_PUNG, 3),
     ],
 )
 def test_basic_rules(melds, pair, expected_only_slug, expected_score):
