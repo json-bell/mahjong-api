@@ -39,106 +39,71 @@ class FullFlushRule(ScoringRule):
 register_rule(FullFlushRule())
 
 
-class JadeDragon(ScoringRule):
+class DragonSuitRule(ScoringRule):
+    def __init__(self, slug, description, suit, dragon_value):
+        super().__init__(
+            slug=slug,
+            description=description,
+            score_value=13,
+            supersedes=[RuleSlug.HALF_FLUSH, RuleSlug.ALL_PUNGS, RuleSlug.ALL_KONGS],
+        )
+        self.suit = suit
+        self.dragon_value = dragon_value
+
+    def matches(self, hand: Hand) -> bool:
+        suits = set(hand.suits)
+        if suits != {self.suit, Suit.DRAGON}:
+            return False
+
+        dragon_meld_values = [
+            meld.tile.value for meld in hand.melds if meld.tile.suit == Suit.DRAGON
+        ]
+        if dragon_meld_values != [self.dragon_value]:
+            return False
+
+        if any(meld.type == MeldType.CHOW for meld in hand.melds):
+            return False
+
+        if hand.pair.suit != self.suit:
+            return False
+
+        return True
+
+
+class JadeDragonRule(DragonSuitRule):
     def __init__(self):
         super().__init__(
             slug=RuleSlug.JADE_DRAGON,
             description="Hand is composed of pungs (or kongs) of bamboo tiles and a pung of green dragons.",
-            score_value=13,
-            supersedes=[RuleSlug.HALF_FLUSH, RuleSlug.ALL_PUNGS, RuleSlug.ALL_KONGS],
+            suit=Suit.BAMBOO,
+            dragon_value=DragonValue.GREEN,
         )
 
-    def matches(self, hand: Hand) -> bool:
-        suits = set(hand.suits)
-        # Suits are Bamboo & Dragon
-        if suits != {Suit.BAMBOO, Suit.DRAGON}:
-            return False
 
-        # Dragon melds are exactly Green Dragon
-        dragon_meld_values = [
-            meld.tile.value for meld in hand.melds if meld.tile.suit == Suit.DRAGON
-        ]
-        if dragon_meld_values != [DragonValue.GREEN]:
-            return False
-
-        if any(meld.type == MeldType.CHOW for meld in hand.melds):
-            return False
-
-        # Pair is bamboo
-        if hand.pair.suit != Suit.BAMBOO:
-            return False
-
-        return True
+register_rule(JadeDragonRule())
 
 
-register_rule(JadeDragon())
-
-
-class RubyDragon(ScoringRule):
+class RubyDragonRule(DragonSuitRule):
     def __init__(self):
         super().__init__(
             slug=RuleSlug.RUBY_DRAGON,
             description="Hand is composed of pungs (or kongs) of character tiles and a pung of red dragons.",
-            score_value=13,
-            supersedes=[RuleSlug.HALF_FLUSH, RuleSlug.ALL_PUNGS, RuleSlug.ALL_KONGS],
+            suit=Suit.CHARACTER,
+            dragon_value=DragonValue.RED,
         )
 
-    def matches(self, hand: Hand) -> bool:
-        suits = set(hand.suits)
-        # Suits are Character & Dragon
-        if suits != {Suit.CHARACTER, Suit.DRAGON}:
-            return False
 
-        # Dragon melds are exactly Green Dragon
-        dragon_meld_values = [
-            meld.tile.value for meld in hand.melds if meld.tile.suit == Suit.DRAGON
-        ]
-        if dragon_meld_values != [DragonValue.RED]:
-            return False
-
-        if any(meld.type == MeldType.CHOW for meld in hand.melds):
-            return False
-
-        # Pair is Character
-        if hand.pair.suit != Suit.CHARACTER:
-            return False
-
-        return True
+register_rule(RubyDragonRule())
 
 
-register_rule(RubyDragon())
-
-
-class PearlDragon(ScoringRule):
+class PearlDragonRule(DragonSuitRule):
     def __init__(self):
         super().__init__(
             slug=RuleSlug.PEARL_DRAGON,
             description="Hand is composed of pungs (or kongs) of circle tiles and a pung of white dragons.",
-            score_value=13,
-            supersedes=[RuleSlug.HALF_FLUSH, RuleSlug.ALL_PUNGS, RuleSlug.ALL_KONGS],
+            suit=Suit.CIRCLE,
+            dragon_value=DragonValue.WHITE,
         )
 
-    def matches(self, hand: Hand) -> bool:
-        suits = set(hand.suits)
-        # Suits are Circle & Dragon
-        if suits != {Suit.CIRCLE, Suit.DRAGON}:
-            return False
 
-        # Dragon melds are exactly Green Dragon
-        dragon_meld_values = [
-            meld.tile.value for meld in hand.melds if meld.tile.suit == Suit.DRAGON
-        ]
-        if dragon_meld_values != [DragonValue.WHITE]:
-            return False
-
-        if any(meld.type == MeldType.CHOW for meld in hand.melds):
-            return False
-
-        # Pair is Circle
-        if hand.pair.suit != Suit.CIRCLE:
-            return False
-
-        return True
-
-
-register_rule(PearlDragon())
+register_rule(PearlDragonRule())
