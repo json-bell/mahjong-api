@@ -72,3 +72,73 @@ class JadeDragon(ScoringRule):
 
 
 register_rule(JadeDragon())
+
+
+class RubyDragon(ScoringRule):
+    def __init__(self):
+        super().__init__(
+            slug=RuleSlug.RUBY_DRAGON,
+            description="Hand is composed of pungs (or kongs) of character tiles and a pung of red dragons.",
+            score_value=13,
+            supersedes=[RuleSlug.HALF_FLUSH, RuleSlug.ALL_PUNGS, RuleSlug.ALL_KONGS],
+        )
+
+    def matches(self, hand: Hand) -> bool:
+        suits = set(hand.suits)
+        # Suits are Character & Dragon
+        if suits != {Suit.CHARACTER, Suit.DRAGON}:
+            return False
+
+        # Dragon melds are exactly Green Dragon
+        dragon_meld_values = [
+            meld.tile.value for meld in hand.melds if meld.tile.suit == Suit.DRAGON
+        ]
+        if dragon_meld_values != [DragonValue.RED]:
+            return False
+
+        if any(meld.type == MeldType.CHOW for meld in hand.melds):
+            return False
+
+        # Pair is Character
+        if hand.pair.suit != Suit.CHARACTER:
+            return False
+
+        return True
+
+
+register_rule(RubyDragon())
+
+
+class PearlDragon(ScoringRule):
+    def __init__(self):
+        super().__init__(
+            slug=RuleSlug.PEARL_DRAGON,
+            description="Hand is composed of pungs (or kongs) of circle tiles and a pung of white dragons.",
+            score_value=13,
+            supersedes=[RuleSlug.HALF_FLUSH, RuleSlug.ALL_PUNGS, RuleSlug.ALL_KONGS],
+        )
+
+    def matches(self, hand: Hand) -> bool:
+        suits = set(hand.suits)
+        # Suits are Circle & Dragon
+        if suits != {Suit.CIRCLE, Suit.DRAGON}:
+            return False
+
+        # Dragon melds are exactly Green Dragon
+        dragon_meld_values = [
+            meld.tile.value for meld in hand.melds if meld.tile.suit == Suit.DRAGON
+        ]
+        if dragon_meld_values != [DragonValue.WHITE]:
+            return False
+
+        if any(meld.type == MeldType.CHOW for meld in hand.melds):
+            return False
+
+        # Pair is Circle
+        if hand.pair.suit != Suit.CIRCLE:
+            return False
+
+        return True
+
+
+register_rule(PearlDragon())

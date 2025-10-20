@@ -17,10 +17,10 @@ def test_basic_rules(melds, pair, expected_only_slug, expected_score):
     hand = Hand.from_short(melds=melds, pair=pair)
     engine = ScoringEngine()
     score = engine.score_hand(hand)
-    explanation = engine.explain_hand(hand)
+    applied_rules = engine.applied_rules(hand)
 
     assert score == expected_score
-    slugs = [rule["slug"] for rule in explanation]
+    slugs = [rule.slug for rule in applied_rules]
     assert [expected_only_slug] == slugs
 
 
@@ -36,8 +36,8 @@ def test_all_kongs_rule():
     )
     engine = ScoringEngine()
     score = engine.score_hand(hand)
-    explanation = engine.explain_hand(hand)
-    slugs = [rule["slug"] for rule in explanation]
+    applied_rules = engine.applied_rules(hand)
+    slugs = [rule.slug for rule in applied_rules]
 
     assert RuleSlug.ALL_PUNGS not in slugs
     assert [RuleSlug.ALL_KONGS] == slugs
