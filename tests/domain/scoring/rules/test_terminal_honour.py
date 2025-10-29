@@ -9,7 +9,10 @@ import pytest
     [
         (["CCi2", "CBa4", "PBa3", "PDrR"], "Ch3", RuleSlug.DRAGON_PUNG, 1),
         (["CCi2", "CBa4", "PDrG", "PDrR"], "Ch3", RuleSlug.DRAGON_PUNG, 2),
-        (["PDrW", "CBa4", "PDrG", "PDrR"], "Ch3", RuleSlug.DRAGON_PUNG, 3),
+        (["PDrW", "PDrR", "PBa4", "CCi6"], "DrG", RuleSlug.LITTLE_THREE_DRAGONS, 4),
+        (["PDrW", "PDrR", "PDrG", "PBa6"], "Ba4", RuleSlug.BIG_THREE_DRAGONS, 13),
+        (["PWiE", "PWiW", "PWiN", "PBa6"], "WiS", RuleSlug.LITTLE_FOUR_WINDS, 13),
+        (["PWiE", "PWiW", "PWiN", "PWiS"], "Ba6", RuleSlug.BIG_FOUR_WINDS, 13),
     ],
 )
 def test_basic_rules(melds, pair, expected_only_slug, expected_score):

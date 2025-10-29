@@ -20,3 +20,93 @@ class DragonPungRule(ScoringRule):
 
 
 register_rule(DragonPungRule())
+
+
+class LittleThreeDragonsRule(ScoringRule):
+    def __init__(self):
+        super().__init__(
+            slug=RuleSlug.LITTLE_THREE_DRAGONS,
+            description="Hand has two dragon pungs and a pair of the third dragon.",
+            score_value=4,
+            supersedes=[RuleSlug.DRAGON_PUNG],
+        )
+
+    def matches(self, hand: Hand) -> bool:
+        if hand.pair.suit != Suit.DRAGON:
+            return False
+
+        dragonPungs = [meld for meld in hand.melds if meld.tile.suit == Suit.DRAGON]
+        return len(dragonPungs) == 2
+
+
+register_rule(LittleThreeDragonsRule())
+
+
+class BigThreeDragonsRule(ScoringRule):
+    def __init__(self):
+        super().__init__(
+            slug=RuleSlug.BIG_THREE_DRAGONS,
+            description="Hand has three dragon pungs.",
+            score_value=13,
+            supersedes=[
+                RuleSlug.DRAGON_PUNG,
+                RuleSlug.ALL_PUNGS,
+                RuleSlug.ALL_KONGS,
+                RuleSlug.FULL_FLUSH,
+                RuleSlug.HALF_FLUSH,
+            ],
+        )
+
+    def matches(self, hand: Hand) -> bool:
+        dragonPungs = [meld for meld in hand.melds if meld.tile.suit == Suit.DRAGON]
+        return len(dragonPungs) == 3
+
+
+register_rule(BigThreeDragonsRule())
+
+
+class LittleFourWindsRule(ScoringRule):
+    def __init__(self):
+        super().__init__(
+            slug=RuleSlug.LITTLE_FOUR_WINDS,
+            description="Hand has three pungs and a pair of winds.",
+            score_value=13,
+            supersedes=[
+                RuleSlug.ALL_PUNGS,
+                RuleSlug.ALL_KONGS,
+                RuleSlug.FULL_FLUSH,
+                RuleSlug.HALF_FLUSH,
+            ],
+        )
+
+    def matches(self, hand: Hand) -> bool:
+        if hand.pair.suit != Suit.WIND:
+            return False
+
+        windPungs = [meld for meld in hand.melds if meld.tile.suit == Suit.WIND]
+        return len(windPungs) == 3
+
+
+register_rule(LittleFourWindsRule())
+
+
+class BigFourWindsRule(ScoringRule):
+    def __init__(self):
+        super().__init__(
+            slug=RuleSlug.BIG_FOUR_WINDS,
+            description="Hand has four pungs of winds.",
+            score_value=13,
+            supersedes=[
+                RuleSlug.ALL_PUNGS,
+                RuleSlug.ALL_KONGS,
+                RuleSlug.FULL_FLUSH,
+                RuleSlug.HALF_FLUSH,
+            ],
+        )
+
+    def matches(self, hand: Hand) -> bool:
+        windPungs = [meld for meld in hand.melds if meld.tile.suit == Suit.WIND]
+        return len(windPungs) == 4
+
+
+register_rule(BigFourWindsRule())
