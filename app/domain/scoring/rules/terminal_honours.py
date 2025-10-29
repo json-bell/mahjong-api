@@ -8,7 +8,7 @@ class DragonPungRule(ScoringRule):
     def __init__(self):
         super().__init__(
             slug=RuleSlug.DRAGON_PUNG,
-            description="All melds are pungs.",
+            description="Hand includes a pung (or kong) of dragons.",
             score_value=1,
         )
 

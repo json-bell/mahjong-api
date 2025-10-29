@@ -7,7 +7,7 @@ class AllPungsRule(ScoringRule):
     def __init__(self):
         super().__init__(
             slug=RuleSlug.ALL_PUNGS,
-            description="All melds are pungs.",
+            description="Hand consists of all pungs.",
             score_value=3,
         )
 
@@ -39,7 +39,7 @@ class AllKongsRule(ScoringRule):
     def __init__(self):
         super().__init__(
             slug=RuleSlug.ALL_KONGS,
-            description="All melds are chows.",
+            description="Hand has four kongs and a pair.",
             score_value=13,
             supersedes=[RuleSlug.ALL_PUNGS],
         )
