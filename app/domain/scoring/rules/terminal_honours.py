@@ -1,7 +1,7 @@
 from app.domain.scoring.rule import ScoringRule, register_rule
 from app.domain.scoring.enums import RuleSlug
 from app.domain.hand import Hand
-from app.domain.enums import Suit
+from app.domain.enums import Suit, NumberValue
 
 
 class DragonPungRule(ScoringRule):
@@ -110,3 +110,51 @@ class BigFourWindsRule(ScoringRule):
 
 
 register_rule(BigFourWindsRule())
+
+
+class AllHonoursRule(ScoringRule):
+    def __init__(self):
+        super().__init__(
+            slug=RuleSlug.ALL_HONORS,
+            description="Hand consists only of honor tiles.",
+            score_value=13,
+            supersedes=[
+                RuleSlug.ALL_PUNGS,
+                RuleSlug.ALL_KONGS,
+                RuleSlug.FULL_FLUSH,
+                RuleSlug.HALF_FLUSH,
+                RuleSlug.LITTLE_THREE_DRAGONS,
+                RuleSlug.BIG_THREE_DRAGONS,
+                RuleSlug.LITTLE_FOUR_WINDS,
+                RuleSlug.BIG_FOUR_WINDS,
+            ],
+        )
+
+    def matches(self, hand: Hand) -> bool:
+        suits = set(hand.suits)
+        return suits.isdisjoint({Suit.BAMBOO, Suit.CHARACTER, Suit.CIRCLE})
+
+
+register_rule(AllHonoursRule())
+
+
+class AllTerminalsRule(ScoringRule):
+    def __init__(self):
+        super().__init__(
+            slug=RuleSlug.ALL_TERMINALS,
+            description="Hand consists only of terminals.",
+            score_value=13,
+            supersedes=[
+                RuleSlug.ALL_PUNGS,
+                RuleSlug.ALL_KONGS,
+                RuleSlug.FULL_FLUSH,
+                RuleSlug.HALF_FLUSH,
+            ],
+        )
+
+    def matches(self, hand: Hand) -> bool:
+        values = {meld.tile.value for meld in hand.melds}
+        return values.issubset({NumberValue.ONE, NumberValue.NINE})
+
+
+register_rule(AllTerminalsRule())

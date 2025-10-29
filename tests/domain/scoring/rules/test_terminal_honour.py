@@ -13,6 +13,8 @@ import pytest
         (["PDrW", "PDrR", "PDrG", "PBa6"], "Ba4", RuleSlug.BIG_THREE_DRAGONS, 13),
         (["PWiE", "PWiW", "PWiN", "PBa6"], "WiS", RuleSlug.LITTLE_FOUR_WINDS, 13),
         (["PWiE", "PWiW", "PWiN", "PWiS"], "Ba6", RuleSlug.BIG_FOUR_WINDS, 13),
+        (["PWiE", "PWiW", "PDrG", "PDrW"], "DrR", RuleSlug.ALL_HONORS, 13),
+        (["PBa1", "PBa9", "PCi1", "PCh1"], "Ch9", RuleSlug.ALL_TERMINALS, 13),
     ],
 )
 def test_basic_rules(melds, pair, expected_only_slug, expected_score):

@@ -32,8 +32,8 @@ class RuleSlug(LabelledEnum):
     BIG_THREE_DRAGONS = "big_three_dragons"  # Terminals/Honors
     LITTLE_FOUR_WINDS = "little_four_winds"  # Terminals/Honors
     BIG_FOUR_WINDS = "big_four_winds"  # Terminals/Honors
-    ALL_HONORS = "all_honors"
-    ALL_TERMINALS = "all_terminals"
+    ALL_HONORS = "all_honors"  # Terminals/Honors
+    ALL_TERMINALS = "all_terminals"  # Terminals/Honors
     NINE_GATES = "nine_gates"
     THIRTEEN_ORPHANS = "thirteen_orphans"
     ALL_KONGS = "all_kongs"  # set-based
