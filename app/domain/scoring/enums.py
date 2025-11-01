@@ -23,17 +23,17 @@ class RuleSlug(LabelledEnum):
     ALL_PUNGS = "all_pungs"  # set-based
     HALF_FLUSH = "half_flush"  # suit-based
     # 4 fan
-    LITTLE_THREE_DRAGONS = "little_three_dragons"
+    LITTLE_THREE_DRAGONS = "little_three_dragons"  # Terminals/Honors
     SEVEN_PAIRS = "seven_pairs"
     # 6 fan
     FULL_FLUSH = "full_flush"  # suit-based
     # limit
     FOUR_CONCEALED_PUNGS = "four_concealed_pungs"
-    BIG_THREE_DRAGONS = "big_three_dragons"
-    LITTLE_FOUR_WINDS = "little_four_winds"
-    BIG_FOUR_WINDS = "big_four_winds"
-    ALL_HONORS = "all_honors"
-    ALL_TERMINALS = "all_terminals"
+    BIG_THREE_DRAGONS = "big_three_dragons"  # Terminals/Honors
+    LITTLE_FOUR_WINDS = "little_four_winds"  # Terminals/Honors
+    BIG_FOUR_WINDS = "big_four_winds"  # Terminals/Honors
+    ALL_HONORS = "all_honors"  # Terminals/Honors
+    ALL_TERMINALS = "all_terminals"  # Terminals/Honors
     NINE_GATES = "nine_gates"
     THIRTEEN_ORPHANS = "thirteen_orphans"
     ALL_KONGS = "all_kongs"  # set-based
