@@ -1,6 +1,6 @@
-from app.domain.scoring.rule import RULES, ScoringRule
-from app.domain.hand import Hand
-from app.domain.scoring.types import RuleExplanation
+from .rule import RULES, ScoringRule
+from .types import RuleExplanation
+from ..hand import Hand
 
 # Registers all rules
 import app.domain.scoring.rules  # noqa: F401

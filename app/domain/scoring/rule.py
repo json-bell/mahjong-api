@@ -2,7 +2,7 @@ from abc import ABC, abstractmethod
 from dataclasses import dataclass, field
 from typing import Dict, List
 from .enums import RuleSlug
-from app.domain.hand import Hand
+from ..hand import Hand
 
 
 @dataclass(frozen=True)

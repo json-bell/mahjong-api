@@ -1,8 +1,6 @@
 import pytest
 from app.domain.enums import Suit, NumberValue, MeldType
-from app.domain.tile import Tile
-from app.domain.meld import Meld
-from app.domain.hand import Hand
+from app.domain import Tile, Meld, Hand
 from app.schemas.hand import HandCreateSchema
 from app.schemas.meld import MeldSchema
 from app.schemas.tile import TileSchema

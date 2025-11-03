@@ -1,16 +1,9 @@
 from typing import List
-from app.domain.tile import Tile
-from app.domain.meld import Meld
-from app.domain.hand import Hand
-from app.domain.enums import (
-    Suit,
-    WindValue,
-    DragonValue,
-    NumberValue,
-    MeldType,
-    TileValue,
-)
-from app.domain.exceptions import InvalidHandError, InvalidMeldError, InvalidTileError
+from .tile import Tile
+from .meld import Meld
+from .hand import Hand
+from .enums import Suit, WindValue, DragonValue, NumberValue, MeldType, TileValue
+from .exceptions import InvalidHandError, InvalidMeldError, InvalidTileError
 
 
 class MahjongFactory:

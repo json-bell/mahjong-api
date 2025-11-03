@@ -1,6 +1,5 @@
-from app.domain.scoring.engine import ScoringEngine
 from app.domain.scoring.enums import RuleSlug
-from app.domain.hand import Hand
+from app.domain import Hand, ScoringEngine
 from app.domain.enums import DragonValue
 import pytest
 

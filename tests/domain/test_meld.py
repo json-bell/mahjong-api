@@ -1,7 +1,6 @@
 import pytest
 from app.domain.enums import MeldType, NumberValue, Suit, WindValue
-from app.domain.tile import Tile
-from app.domain.meld import Meld
+from app.domain import Tile, Meld
 from app.schemas.tile import TileSchema
 from app.schemas.meld import MeldSchema
 from app.domain.exceptions import InvalidMeldError, InvalidTileError

@@ -1,5 +1,5 @@
 import pytest
-from app.domain.tile import Tile
+from app.domain import Tile
 from app.domain.enums import Suit, NumberValue, DragonValue, WindValue
 from app.schemas.tile import TileSchema
 from app.domain.exceptions import InvalidTileError

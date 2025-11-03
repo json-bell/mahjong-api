@@ -1,6 +1,5 @@
-from app.domain.hand import Hand
+from app.domain import Hand, ScoringEngine
 from app.domain.scoring.types import RuleExplanation
-from app.domain.scoring.engine import ScoringEngine
 from typing import TypedDict
 
 

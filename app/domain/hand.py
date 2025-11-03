@@ -1,8 +1,8 @@
 from typing import List
-from app.domain.enums import MeldType, Suit
-from app.domain.tile import Tile
-from app.domain.meld import Meld
-from app.domain.exceptions import InvalidTileError, InvalidMeldError, InvalidHandError
+from .enums import MeldType, Suit
+from .tile import Tile
+from .meld import Meld
+from .exceptions import InvalidTileError, InvalidMeldError, InvalidHandError
 from app.schemas.hand import HandCreateSchema
 
 

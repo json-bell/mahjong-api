@@ -1,7 +1,7 @@
-from app.domain.enums import MeldType, NumberValue
-from app.domain.tile import Tile
+from .enums import MeldType, NumberValue
+from .tile import Tile
+from .exceptions import InvalidTileError, InvalidMeldError
 from app.schemas.meld import MeldSchema
-from app.domain.exceptions import InvalidTileError, InvalidMeldError
 
 
 class Meld:

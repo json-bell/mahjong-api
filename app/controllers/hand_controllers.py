@@ -1,6 +1,6 @@
 from fastapi import APIRouter
 from app.schemas.hand import HandCreateSchema
-from app.domain.hand import Hand
+from app.domain import Hand
 from app.services.scoring import ScoringService, HandScoreExplanation
 from app.db.crud import hand as hand_crud
 

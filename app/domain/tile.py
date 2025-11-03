@@ -1,12 +1,6 @@
-from app.domain.enums import (
-    Suit,
-    TileValue,
-    NumberValue,
-    DragonValue,
-    WindValue,
-)
+from .enums import Suit, TileValue, NumberValue, DragonValue, WindValue
+from .exceptions import InvalidTileError
 from app.schemas.tile import TileSchema
-from app.domain.exceptions import InvalidTileError
 
 
 class Tile:
