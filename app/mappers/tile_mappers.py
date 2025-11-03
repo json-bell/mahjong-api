@@ -1,21 +1,28 @@
-from typing import List
-from .tile import Tile
-from .meld import Meld
-from .hand import Hand
-from .enums import Suit, WindValue, DragonValue, NumberValue, MeldType, TileValue
-from .exceptions import InvalidHandError, InvalidMeldError, InvalidTileError
+from app.domain import Tile
+from app.schemas.tile import TileSchema
+from app.domain.enums import Suit, WindValue, DragonValue, NumberValue, TileValue
+from app.domain.exceptions import InvalidTileError
 
 
-class MahjongFactory:
-    @classmethod
-    def tile_from_short(cls, code: str) -> Tile:
+class TileMapper:
+    @staticmethod
+    def to_dict(tile: Tile):
+        return {"suit": tile.suit.value, "tile": tile.value.value}
+
+    @staticmethod
+    def from_schema(schema: TileSchema) -> Tile:
+        return Tile(schema.suit, schema.value)
+
+    @staticmethod
+    def from_short(code: str) -> Tile:
         """
         Generates a Tile from a string encoding, e.g.
         "Ba6" -> 6 of Bamboo
         "DrG" -> Green Dragon
         "WiN" -> North Wind
 
-        For internal use e.g. for making tests
+        to_dict is the standard serialisation - from_short is used
+        in tests & example hands
         """
         code = code.strip()
         suit_code = code[:2].capitalize()
@@ -56,28 +63,3 @@ class MahjongFactory:
             value = NumberValue(value_code)
 
         return Tile(suit, value)
-
-    @classmethod
-    def meld_from_short(cls, code: str) -> Meld:
-        code = code.strip()
-        type_code = code[:1].upper()
-        tile_code = code[1:]
-
-        TYPE_MAP = {"P": MeldType.PONG, "C": MeldType.CHOW, "K": MeldType.KONG}
-
-        if type_code not in TYPE_MAP:
-            raise InvalidMeldError(f"Invalid meld type code: {type_code}")
-
-        type = TYPE_MAP[type_code]
-
-        return Meld(type, tile=cls.tile_from_short(tile_code))
-
-    @classmethod
-    def hand_from_short(cls, melds: List[str], pair: str) -> Hand:
-        if len(melds) != 4:
-            raise InvalidHandError(f"Invalid meld length: {str(melds)}")
-
-        return Hand(
-            melds=[cls.meld_from_short(meld_code) for meld_code in melds],
-            pair=cls.tile_from_short(pair),
-        )

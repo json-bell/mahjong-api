@@ -3,7 +3,6 @@ from .enums import MeldType, Suit
 from .tile import Tile
 from .meld import Meld
 from .exceptions import InvalidTileError, InvalidMeldError, InvalidHandError
-from app.schemas.hand import HandCreateSchema
 
 
 class Hand:
@@ -37,21 +36,3 @@ class Hand:
                 raise InvalidMeldError(
                     "All melds must be have a tile and type", meld=meld
                 )
-
-    def to_dict(self):
-        return {
-            "melds": [meld.to_dict() for meld in self.melds],
-            "pair": self.pair.to_dict(),
-        }
-
-    @classmethod
-    def from_schema(cls, schema: HandCreateSchema) -> "Hand":
-        melds = [Meld.from_schema(meld) for meld in schema.melds]
-        pair = Tile.from_schema(schema.pair)
-        return cls(melds, pair)
-
-    @classmethod
-    def from_short(cls, melds: List[str], pair: str):
-        from app.domain.mahjong_factory import MahjongFactory
-
-        return MahjongFactory.hand_from_short(melds, pair)
