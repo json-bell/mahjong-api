@@ -1,5 +1,6 @@
 from app.domain.scoring.enums import RuleSlug
-from app.domain import Hand, ScoringEngine
+from app.domain import ScoringEngine
+from app.mappers import HandMapper
 import pytest
 
 
@@ -13,7 +14,7 @@ import pytest
     ],
 )
 def test_basic_rules(melds, pair, expected_only_slug, expected_score):
-    hand = Hand.from_short(melds=melds, pair=pair)
+    hand = HandMapper.from_short(melds=melds, pair=pair)
     engine = ScoringEngine()
     score = engine.score_hand(hand)
     applied_rules = engine.applied_rules(hand)
@@ -24,7 +25,7 @@ def test_basic_rules(melds, pair, expected_only_slug, expected_score):
 
 
 def test_all_kongs_rule():
-    hand = Hand.from_short(
+    hand = HandMapper.from_short(
         melds=[
             "KCi2",
             "KCi4",
@@ -44,7 +45,7 @@ def test_all_kongs_rule():
 
 
 def test_all_chows_requires_suit_pair():
-    hand = Hand.from_short(melds=["CCi2", "CCi4", "CBa3", "CBa6"], pair="DrG")
+    hand = HandMapper.from_short(melds=["CCi2", "CCi4", "CBa3", "CBa6"], pair="DrG")
     engine = ScoringEngine()
     score = engine.score_hand(hand)
     applied_rules = engine.applied_rules(hand)
