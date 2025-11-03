@@ -10,13 +10,15 @@ from .exceptions import (
     MahjongError,
 )
 from .scoring.engine import ScoringEngine
+from .scoring.enums import RuleSlug
+from .scoring.rule import ScoringRule, RULES
+from .scoring.types import RuleExplanation
 
 __all__ = [
     "Tile",
     "Meld",
     "Hand",
     "Game",
-    "ScoringEngine",
     "DragonValue",
     "MeldType",
     "NumberValue",
@@ -27,4 +29,9 @@ __all__ = [
     "InvalidMeldError",
     "InvalidTileError",
     "MahjongError",
+    "ScoringEngine",
+    "RuleSlug",
+    "ScoringRule",
+    "RULES",
+    "RuleExplanation",
 ]

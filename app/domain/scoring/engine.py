@@ -3,7 +3,7 @@ from .types import RuleExplanation
 from ..hand import Hand
 
 # Registers all rules
-import app.domain.scoring.rules  # noqa: F401
+from . import rules  # noqa: F401
 
 
 class ScoringEngine:

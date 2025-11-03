@@ -1,5 +1,4 @@
-from app.domain.scoring.enums import RuleSlug
-from app.domain import ScoringEngine
+from app.domain import ScoringEngine, RuleSlug
 from app.mappers import HandMapper
 import pytest
 

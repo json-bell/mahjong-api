@@ -1,4 +1,4 @@
-from app.domain.enums import LabelledEnum
+from ..enums import LabelledEnum
 
 
 class RuleSlug(LabelledEnum):
