@@ -1,5 +1,4 @@
-from app.domain import Hand
-from app.domain.exceptions import InvalidHandError
+from app.domain import Hand, InvalidHandError
 from app.schemas.hand import HandCreateSchema
 from typing import List
 from .meld_mappers import MeldMapper

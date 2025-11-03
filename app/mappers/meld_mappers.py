@@ -1,6 +1,4 @@
-from app.domain import Meld
-from app.domain.enums import MeldType
-from app.domain.exceptions import InvalidMeldError
+from app.domain import Meld, MeldType, InvalidMeldError
 from .tile_mappers import TileMapper
 from app.schemas.meld import MeldSchema
 

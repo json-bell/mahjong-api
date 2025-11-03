@@ -1,5 +1,4 @@
-from app.domain import Tile, Meld, Hand
-from app.domain.enums import Suit, MeldType, NumberValue
+from app.domain import Tile, Meld, Hand, Suit, MeldType, NumberValue
 from app.mappers import HandMapper
 from app.schemas.hand import HandCreateSchema
 from app.schemas.meld import MeldSchema

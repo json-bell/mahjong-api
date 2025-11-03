@@ -1,7 +1,13 @@
-from app.domain import Tile
+from app.domain import (
+    Tile,
+    Suit,
+    WindValue,
+    DragonValue,
+    NumberValue,
+    TileValue,
+    InvalidTileError,
+)
 from app.schemas.tile import TileSchema
-from app.domain.enums import Suit, WindValue, DragonValue, NumberValue, TileValue
-from app.domain.exceptions import InvalidTileError
 
 
 class TileMapper:

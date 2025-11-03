@@ -1,6 +1,5 @@
 from app.domain.scoring.enums import RuleSlug
-from app.domain import ScoringEngine
-from app.domain.enums import DragonValue
+from app.domain import ScoringEngine, DragonValue
 from app.mappers import HandMapper
 import pytest
 

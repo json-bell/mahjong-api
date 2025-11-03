@@ -1,5 +1,4 @@
-from app.domain import Tile
-from app.domain.enums import Suit, DragonValue, NumberValue, WindValue
+from app.domain import Tile, Suit, DragonValue, NumberValue, WindValue
 from app.mappers import TileMapper
 from app.schemas.tile import TileSchema
 import pytest

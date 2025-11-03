@@ -1,5 +1,4 @@
-from app.domain import Tile, Meld
-from app.domain.enums import Suit, MeldType, NumberValue, WindValue
+from app.domain import Tile, Meld, Suit, MeldType, NumberValue, WindValue
 from app.mappers import MeldMapper
 from app.schemas.tile import TileSchema
 from app.schemas.meld import MeldSchema

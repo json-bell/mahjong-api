@@ -1,5 +1,5 @@
 from pydantic import BaseModel
-from app.domain.enums import Suit, TileValue
+from app.domain import Suit, TileValue
 
 
 class TileSchema(BaseModel):

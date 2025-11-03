@@ -24,6 +24,10 @@ class ScoringRule(ABC):
 
 
 RULES: Dict[RuleSlug, ScoringRule] = {}
+# TODO - move the rules to a separate registry, and just list them all lol
+# instead of messing with the register_rule() on import
+# bc then you can easily change the RULES you're using too
+# if you just have a long list
 
 
 def register_rule(rule: ScoringRule):
