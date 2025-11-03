@@ -1,7 +1,6 @@
 from fastapi import APIRouter
 from typing import Dict
-from app.domain.scoring.enums import RuleSlug
-from app.domain.scoring.rule import ScoringRule, RULES
+from app.domain import RuleSlug, ScoringRule, RULES
 
 
 router = APIRouter(prefix="/score", tags=["hands"])

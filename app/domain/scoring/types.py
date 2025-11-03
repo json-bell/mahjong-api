@@ -1,5 +1,5 @@
 from typing import TypedDict
-from app.domain.scoring.enums import RuleSlug
+from .enums import RuleSlug
 
 
 class RuleExplanation(TypedDict):

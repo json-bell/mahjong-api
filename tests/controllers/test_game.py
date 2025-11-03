@@ -1,5 +1,5 @@
 from datetime import datetime
-from app.schemas.hand import HandOutSchema
+from app.schemas import HandOutSchema
 
 
 def test_create_game(client):

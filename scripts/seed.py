@@ -3,8 +3,7 @@ from sqlalchemy.orm import sessionmaker, Session
 from app.db.base import Base
 from app.config import settings
 from app.db.crud import hand as hand_crud, game as game_crud
-from app.schemas.hand import HandCreateSchema
-from app.schemas.game import GameCreateSchema
+from app.schemas import HandCreateSchema, GameCreateSchema
 
 
 engine = create_engine(settings.database_url)

@@ -1,6 +1,6 @@
 from sqlalchemy.orm import Session
 from app.db import models
-from app.schemas.hand import HandCreateSchema
+from app.schemas import HandCreateSchema
 
 
 def create_hand(db: Session, hand_data: HandCreateSchema, game_id: int):

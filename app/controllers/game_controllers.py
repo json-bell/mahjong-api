@@ -3,8 +3,13 @@ from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from app.db.dependencies import get_db
 from app.db.crud import game as game_crud, hand as hand_crud
-from app.schemas.game import GameCreateSchema, GameOutSchema, GameDetailSchema
-from app.schemas.hand import HandCreateSchema, HandOutSchema
+from app.schemas import (
+    GameCreateSchema,
+    GameOutSchema,
+    GameDetailSchema,
+    HandCreateSchema,
+    HandOutSchema,
+)
 
 router = APIRouter(prefix="/games", tags=["games"])
 

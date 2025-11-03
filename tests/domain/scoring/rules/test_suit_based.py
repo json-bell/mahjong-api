@@ -1,7 +1,5 @@
-from app.domain.scoring.engine import ScoringEngine
-from app.domain.scoring.enums import RuleSlug
-from app.domain.hand import Hand
-from app.domain.enums import DragonValue
+from app.domain import ScoringEngine, DragonValue, RuleSlug
+from app.mappers import HandMapper
 import pytest
 
 
@@ -14,7 +12,7 @@ import pytest
     ],
 )
 def test_basic_rules(melds, pair, expected_only_slug, expected_score):
-    hand = Hand.from_short(melds=melds, pair=pair)
+    hand = HandMapper.from_short(melds=melds, pair=pair)
     engine = ScoringEngine()
     score = engine.score_hand(hand)
     applied_rules = engine.applied_rules(hand)
@@ -25,7 +23,7 @@ def test_basic_rules(melds, pair, expected_only_slug, expected_score):
 
 
 def test_pair_negates_full_flush():
-    hand = Hand.from_short(melds=["CCi2", "CCi4", "PCi9", "PCi8"], pair="DrR")
+    hand = HandMapper.from_short(melds=["CCi2", "CCi4", "PCi9", "PCi8"], pair="DrR")
     engine = ScoringEngine()
     explanation = engine.explain_hand(hand)
 
@@ -49,7 +47,7 @@ dragon_hand_params = pytest.mark.parametrize(
 def test_dragon_pairs_are_not_sufficient(
     rule_slug, dragon_value, suit_code, dragon_code, diff_dragon_code
 ):
-    hand = Hand.from_short(
+    hand = HandMapper.from_short(
         melds=[f"P{suit_code}2", f"P{suit_code}4", f"P{suit_code}7", f"P{suit_code}8"],
         pair=f"Dr{dragon_code}",
     )
@@ -61,7 +59,7 @@ def test_dragon_pairs_are_not_sufficient(
 
 @dragon_hand_params
 def test_requires_all_pongs(rule_slug, dragon_value, suit_code, dragon_code, diff_dragon_code):
-    hand = Hand.from_short(
+    hand = HandMapper.from_short(
         melds=[f"P{suit_code}2", f"C{suit_code}4", f"PDr{dragon_code}", f"P{suit_code}8"],
         pair=f"{suit_code}1",
     )
@@ -73,7 +71,7 @@ def test_requires_all_pongs(rule_slug, dragon_value, suit_code, dragon_code, dif
 
 @dragon_hand_params
 def test_other_dragons_not_allowed(rule_slug, dragon_value, suit_code, dragon_code, diff_dragon_code):
-    hand = Hand.from_short(
+    hand = HandMapper.from_short(
         melds=[f"P{suit_code}2", f"P{suit_code}4", f"PDr{dragon_code}", f"PDr{diff_dragon_code}"],
         pair=f"{suit_code}1",
     )

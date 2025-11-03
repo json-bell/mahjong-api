@@ -1,6 +1,6 @@
 from pydantic import BaseModel
-from app.schemas.tile import TileSchema
-from app.domain.enums import MeldType
+from .tile import TileSchema
+from app.domain import MeldType
 
 
 class MeldSchema(BaseModel):
