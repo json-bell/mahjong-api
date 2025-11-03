@@ -1,7 +1,7 @@
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
-from app.domain.exceptions import MahjongError
+from app.domain import MahjongError
 from pathlib import Path
 import json
 from app.controllers import game_controllers, hand_controllers, score_controllers

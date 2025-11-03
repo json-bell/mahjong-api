@@ -1,6 +1,5 @@
-from app.domain.scoring.engine import ScoringEngine
-from app.domain.scoring.enums import RuleSlug
-from app.domain.hand import Hand
+from app.domain import ScoringEngine, RuleSlug
+from app.mappers import HandMapper
 import pytest
 
 
@@ -18,7 +17,7 @@ import pytest
     ],
 )
 def test_basic_rules(melds, pair, expected_only_slug, expected_score):
-    hand = Hand.from_short(melds=melds, pair=pair)
+    hand = HandMapper.from_short(melds=melds, pair=pair)
     engine = ScoringEngine()
     score = engine.score_hand(hand)
     applied_rules = engine.applied_rules(hand)

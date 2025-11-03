@@ -1,7 +1,7 @@
-from app.domain.scoring.rule import ScoringRule, register_rule
-from app.domain.scoring.enums import RuleSlug
-from app.domain.hand import Hand
-from app.domain.enums import Suit, DragonValue, MeldType
+from ..rule import ScoringRule, register_rule
+from ..enums import RuleSlug
+from ...hand import Hand
+from ...enums import Suit, DragonValue, MeldType
 
 
 class HalfFlushRule(ScoringRule):

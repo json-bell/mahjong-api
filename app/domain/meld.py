@@ -1,7 +1,6 @@
-from app.domain.enums import MeldType, NumberValue
-from app.domain.tile import Tile
-from app.schemas.meld import MeldSchema
-from app.domain.exceptions import InvalidTileError, InvalidMeldError
+from .enums import MeldType, NumberValue
+from .tile import Tile
+from .exceptions import InvalidTileError, InvalidMeldError
 
 
 class Meld:
@@ -37,16 +36,3 @@ class Meld:
                 )
             elif tile.is_honour:
                 raise InvalidMeldError("Honour tiles cannot form chows.", meld=self)
-
-    def to_dict(self):
-        return {"type": self.type.value, "tile": self.tile.to_dict()}
-
-    @classmethod
-    def from_schema(cls, schema: MeldSchema) -> "Meld":
-        return cls(schema.type, Tile.from_schema(schema.tile))
-
-    @classmethod
-    def from_short(cls, code: str):
-        from app.domain.mahjong_factory import MahjongFactory
-
-        return MahjongFactory.meld_from_short(code)

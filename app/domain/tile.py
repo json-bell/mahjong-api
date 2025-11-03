@@ -1,12 +1,5 @@
-from app.domain.enums import (
-    Suit,
-    TileValue,
-    NumberValue,
-    DragonValue,
-    WindValue,
-)
-from app.schemas.tile import TileSchema
-from app.domain.exceptions import InvalidTileError
+from .enums import Suit, TileValue, NumberValue, DragonValue, WindValue
+from .exceptions import InvalidTileError
 
 
 class Tile:
@@ -58,16 +51,3 @@ class Tile:
                 f"{suit.label} suit tiles must have value in {NumberValue.values()}",
                 tile=self,
             )
-
-    def to_dict(self):
-        return {"suit": self.suit.value, "tile": self.value.value}
-
-    @classmethod
-    def from_schema(cls, schema: TileSchema) -> "Tile":
-        return cls(schema.suit, schema.value)
-
-    @classmethod
-    def from_short(cls, code: str):
-        from app.domain.mahjong_factory import MahjongFactory
-
-        return MahjongFactory.tile_from_short(code)

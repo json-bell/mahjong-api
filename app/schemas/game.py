@@ -1,7 +1,7 @@
 from pydantic import BaseModel, ConfigDict
 from datetime import datetime
 from typing import Optional, List
-from app.schemas.hand import HandOutSchema
+from .hand import HandOutSchema
 
 
 class GameCreateSchema(BaseModel):
