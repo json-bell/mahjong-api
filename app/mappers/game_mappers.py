@@ -1,5 +1,5 @@
 from app.domain import Game
-from app.schemas.game import GameOutSchema
+from app.schemas import GameOutSchema
 
 
 class GameMapper:

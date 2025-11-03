@@ -1,8 +1,6 @@
 from app.domain import Tile, Meld, Hand, Suit, MeldType, NumberValue
 from app.mappers import HandMapper
-from app.schemas.hand import HandCreateSchema
-from app.schemas.meld import MeldSchema
-from app.schemas.tile import TileSchema
+from app.schemas import HandCreateSchema, MeldSchema, TileSchema
 import pytest
 
 

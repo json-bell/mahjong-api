@@ -7,7 +7,7 @@ from app.domain import (
     TileValue,
     InvalidTileError,
 )
-from app.schemas.tile import TileSchema
+from app.schemas import TileSchema
 
 
 class TileMapper:

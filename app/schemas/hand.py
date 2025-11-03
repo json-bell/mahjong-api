@@ -2,8 +2,8 @@ from typing import List
 from pydantic import BaseModel, ConfigDict
 from datetime import datetime
 from typing import Optional
-from app.schemas.meld import MeldSchema
-from app.schemas.tile import TileSchema
+from .meld import MeldSchema
+from .tile import TileSchema
 
 
 class HandCreateSchema(BaseModel):

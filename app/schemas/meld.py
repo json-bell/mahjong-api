@@ -1,5 +1,5 @@
 from pydantic import BaseModel
-from app.schemas.tile import TileSchema
+from .tile import TileSchema
 from app.domain import MeldType
 
 

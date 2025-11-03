@@ -1,6 +1,6 @@
 from sqlalchemy.orm import Session, joinedload
 from app.db import models
-from app.schemas.game import GameCreateSchema
+from app.schemas import GameCreateSchema
 
 
 def create_game(db: Session, game: GameCreateSchema):

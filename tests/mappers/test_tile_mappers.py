@@ -1,6 +1,6 @@
 from app.domain import Tile, Suit, DragonValue, NumberValue, WindValue
 from app.mappers import TileMapper
-from app.schemas.tile import TileSchema
+from app.schemas import TileSchema
 import pytest
 
 

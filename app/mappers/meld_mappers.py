@@ -1,6 +1,6 @@
 from app.domain import Meld, MeldType, InvalidMeldError
 from .tile_mappers import TileMapper
-from app.schemas.meld import MeldSchema
+from app.schemas import MeldSchema
 
 
 class MeldMapper:
