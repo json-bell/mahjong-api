@@ -2,7 +2,16 @@ from .tile import Tile
 from .meld import Meld
 from .hand import Hand
 from .game import Game
-from .enums import DragonValue, MeldType, NumberValue, Suit, TileValue, WindValue
+from .player import Player
+from .enums import (
+    DragonValue,
+    MeldType,
+    NumberValue,
+    Suit,
+    TileValue,
+    WindValue,
+    PlayerIndex,
+)
 from .exceptions import (
     InvalidHandError,
     InvalidMeldError,
@@ -19,12 +28,14 @@ __all__ = [
     "Meld",
     "Hand",
     "Game",
+    "Player",
     "DragonValue",
     "MeldType",
     "NumberValue",
     "Suit",
     "TileValue",
     "WindValue",
+    "PlayerIndex",
     "InvalidHandError",
     "InvalidMeldError",
     "InvalidTileError",

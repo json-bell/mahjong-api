@@ -61,3 +61,11 @@ class MeldType(LabelledEnum):
     CHOW = "chow"
     PONG = "pong"
     KONG = "kong"
+
+
+@unique
+class PlayerIndex(int, Enum):
+    FIRST = 1
+    SECOND = 2
+    THIRD = 3
+    FOURTH = 4

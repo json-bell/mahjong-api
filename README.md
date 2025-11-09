@@ -6,6 +6,10 @@ This is a repository for a Mahjong score tracker. The goal is to have the follow
 - Track the score throughout a game by submitting hands
 - Access this through the front-end web app, synced between players here
 
+# Requirements
+
+Supported Python version: 3.12.7+
+
 # About the App
 
 Mahjong has many different scoring systems, and variations on the scoring within each system too. This app uses the Hong-Kong Old Style rules - see a full description of this scoring ruleset at http://mahjong.wikidot.com/rules:hong-kong-old-style-scoring
