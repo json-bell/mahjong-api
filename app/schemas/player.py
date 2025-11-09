@@ -6,9 +6,10 @@ class PlayerCreateSchema(BaseModel):
     player_index: PlayerIndex
     name: str
     game_id: int
+    score: int = 0
 
     model_config = ConfigDict(from_attributes=True)
 
 
 class PlayerOutSchema(PlayerCreateSchema):
-    player_id: int
+    id: int
