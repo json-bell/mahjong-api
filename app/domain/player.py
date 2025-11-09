@@ -1,9 +1,9 @@
 from dataclasses import dataclass
-from .enums import PlayerIndex
+from .enums import PlayerSlot
 
 
 @dataclass
 class Player:
     name: str
-    player_index: PlayerIndex
+    player_slot: PlayerSlot
     score: int = 0

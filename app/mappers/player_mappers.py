@@ -6,5 +6,5 @@ class PlayerMapper:
     @staticmethod
     def from_schema(schema: PlayerCreateSchema) -> Player:
         return Player(
-            name=schema.name, player_index=schema.player_index, score=schema.score
+            name=schema.name, player_slot=schema.player_slot, score=schema.score
         )

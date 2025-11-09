@@ -64,7 +64,7 @@ class MeldType(LabelledEnum):
 
 
 @unique
-class PlayerIndex(int, Enum):
+class PlayerSlot(int, Enum):
     FIRST = 1
     SECOND = 2
     THIRD = 3

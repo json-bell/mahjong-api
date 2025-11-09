@@ -10,7 +10,7 @@ from .enums import (
     Suit,
     TileValue,
     WindValue,
-    PlayerIndex,
+    PlayerSlot,
 )
 from .exceptions import (
     InvalidHandError,
@@ -36,7 +36,7 @@ __all__ = [
     "Suit",
     "TileValue",
     "WindValue",
-    "PlayerIndex",
+    "PlayerSlot",
     "InvalidHandError",
     "InvalidMeldError",
     "InvalidTileError",

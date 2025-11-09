@@ -1,9 +1,9 @@
 from pydantic import BaseModel, ConfigDict
-from app.domain import PlayerIndex
+from app.domain import PlayerSlot
 
 
 class PlayerCreateSchema(BaseModel):
-    player_index: PlayerIndex
+    player_slot: PlayerSlot
     name: str
     game_id: int
     score: int = 0
