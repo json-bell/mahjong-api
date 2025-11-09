@@ -16,6 +16,7 @@ from .exceptions import (
     InvalidHandError,
     InvalidMeldError,
     InvalidTileError,
+    InvalidGameError,
     MahjongError,
 )
 from .scoring.engine import ScoringEngine
@@ -39,6 +40,7 @@ __all__ = [
     "InvalidHandError",
     "InvalidMeldError",
     "InvalidTileError",
+    "InvalidGameError",
     "MahjongError",
     "ScoringEngine",
     "RuleSlug",

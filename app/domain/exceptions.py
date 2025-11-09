@@ -49,3 +49,9 @@ class InvalidHandError(MahjongError):
     """Raised when a Mahjong hand is invalid."""
 
     code = "INVALID_HAND"
+
+
+class InvalidGameError(MahjongError):
+    """Raised for an invalid game"""
+
+    code = "INVALID_GAME"
