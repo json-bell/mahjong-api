@@ -1,4 +1,4 @@
-from app.domain import Hand, InvalidHandError
+from app.domain import Hand, InvalidHandError, PlayerSlot
 from app.schemas import HandCreateSchema
 from typing import List
 from .meld_mappers import MeldMapper
@@ -17,14 +17,17 @@ class HandMapper:
     def from_schema(schema: HandCreateSchema) -> Hand:
         melds = [MeldMapper.from_schema(meld) for meld in schema.melds]
         pair = TileMapper.from_schema(schema.pair)
-        return Hand(melds, pair)
+        return Hand(melds, pair, player_slot=schema.player_slot)
 
     @staticmethod
-    def from_short(melds: List[str], pair: str) -> Hand:
+    def from_short(
+        melds: List[str], pair: str, player_slot: PlayerSlot = PlayerSlot(1)
+    ) -> Hand:
         if len(melds) != 4:
             raise InvalidHandError(f"Invalid meld length: {str(melds)}")
 
         return Hand(
             melds=[MeldMapper.from_short(meld_code) for meld_code in melds],
             pair=TileMapper.from_short(pair),
+            player_slot=player_slot,
         )

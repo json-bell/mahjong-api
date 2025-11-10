@@ -1,4 +1,4 @@
-from app.domain import Tile, Meld, Hand, Suit, MeldType, NumberValue
+from app.domain import Tile, Meld, Hand, Suit, MeldType, NumberValue, PlayerSlot
 from app.mappers import HandMapper
 from app.schemas import HandCreateSchema, MeldSchema, TileSchema
 import pytest
@@ -9,7 +9,9 @@ def hand_schema_fixture():
     # Create HandSchema with 4 melds and a pair
     tile_schema = TileSchema(suit=Suit.CIRCLE, value=NumberValue.FIVE)
     meld_schemas = [MeldSchema(type=MeldType.CHOW, tile=tile_schema) for _ in range(4)]
-    return HandCreateSchema(melds=meld_schemas, pair=tile_schema, game_id=1)
+    return HandCreateSchema(
+        melds=meld_schemas, pair=tile_schema, game_id=1, player_slot=PlayerSlot.FIRST
+    )
 
 
 def test_hand_from_schema(hand_schema_fixture):

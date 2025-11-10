@@ -6,6 +6,7 @@ from app.db.session import engine, SessionLocal
 from app.main import app  # your FastAPI app
 from app.db.models import Game, Hand
 from app.db.dependencies import get_db
+from app.domain import PlayerSlot
 
 
 def pytest_sessionstart(session):
@@ -16,10 +17,7 @@ def pytest_sessionstart(session):
     if env is None:
         pytest.exit("❌ ENV not set. Did you mean to run with ENV=test?")
     if env != "test":
-        pytest.exit(
-            f"❌ Refusing to run tests with ENV={env!r}. "
-            "Set ENV=test before running pytest."
-        )
+        pytest.exit(f"❌ Refusing to run tests with ENV={env!r}. Set ENV=test before running pytest.")
 
 
 @pytest.fixture(scope="session")
@@ -93,7 +91,7 @@ def hand_factory(db_session, example_hand_tiles):
     """Returns a factory function to create hands for tests."""
 
     def _create_hand(game_id, **overrides):
-        defaults = {**example_hand_tiles, "game_id": game_id}
+        defaults = {**example_hand_tiles, "game_id": game_id, "player_slot": PlayerSlot.FIRST}
         defaults.update(overrides)
 
         hand = Hand(**defaults)

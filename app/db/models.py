@@ -21,7 +21,8 @@ class Hand(Base):
     __tablename__ = "hands"
 
     id = Column(Integer, primary_key=True, index=True)
-    game_id = Column(Integer, ForeignKey("games.id"))
+    game_id = Column(Integer, ForeignKey("games.id"), nullable=False)
+    player_slot = Column(Integer, nullable=False)
     melds = Column(JSONB, nullable=False)  # JSON that parses to 4 melds
     pair = Column(JSONB, nullable=False)  # JSON that parses to a tile
     score = Column(Integer, default=0)
