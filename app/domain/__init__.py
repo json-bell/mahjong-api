@@ -10,6 +10,7 @@ from .enums import (
     NumberValue,
     Suit,
     TileValue,
+    parse_tile_value,
     WindValue,
     PlayerSlot,
 )
@@ -37,6 +38,7 @@ __all__ = [
     "NumberValue",
     "Suit",
     "TileValue",
+    "parse_tile_value",
     "WindValue",
     "PlayerSlot",
     "InvalidHandError",
