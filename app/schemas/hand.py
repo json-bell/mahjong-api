@@ -7,17 +7,22 @@ from .tile import TileSchema
 from app.domain import PlayerSlot
 
 
-class HandCreateSchema(BaseModel):
+class HandSchema(BaseModel):
     melds: List[MeldSchema]
     pair: TileSchema
-    game_id: int
-    player_slot: PlayerSlot
 
     model_config = ConfigDict(from_attributes=True)
 
 
-class HandOutSchema(HandCreateSchema):
+class ScoredHandCreateSchema(BaseModel):
+    hand: HandSchema
+    player_slot: PlayerSlot
+    game_id: int
+
+    model_config = ConfigDict(from_attributes=True)
+
+
+class ScoredHandOutSchema(ScoredHandCreateSchema):
     id: int
-    created_at: Optional[datetime] = None
-    melds: List[MeldSchema]
-    pair: TileSchema
+    created_at: Optional[datetime]
+    score: int
