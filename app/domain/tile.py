@@ -1,11 +1,14 @@
+from dataclasses import dataclass
 from .enums import Suit, TileValue, NumberValue, DragonValue, WindValue
 from .exceptions import InvalidTileError
 
 
+@dataclass
 class Tile:
-    def __init__(self, suit: Suit, value: TileValue):
-        self.suit = suit
-        self.value = value
+    suit: Suit
+    value: TileValue
+
+    def __post_init__(self):
         self._validate()
 
     @property
