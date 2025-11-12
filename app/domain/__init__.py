@@ -1,6 +1,7 @@
 from .tile import Tile
 from .meld import Meld
 from .hand import Hand
+from .scored_hand import ScoredHand
 from .game import Game
 from .player import Player
 from .enums import (
@@ -28,6 +29,7 @@ __all__ = [
     "Tile",
     "Meld",
     "Hand",
+    "ScoredHand",
     "Game",
     "Player",
     "DragonValue",
