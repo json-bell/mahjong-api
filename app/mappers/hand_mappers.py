@@ -22,9 +22,17 @@ class HandMapper:
 
     @staticmethod
     def from_schema(schema: HandSchema) -> Hand:
-        melds = [MeldMapper.from_schema(meld) for meld in schema.melds]
-        pair = TileMapper.from_schema(schema.pair)
-        return Hand(melds, pair)
+        return Hand(
+            melds=[MeldMapper.from_schema(m) for m in schema.melds],
+            pair=TileMapper.from_schema(schema.pair),
+        )
+
+    @staticmethod
+    def to_schema(hand: Hand) -> HandSchema:
+        return HandSchema(
+            melds=[MeldMapper.to_schema(m) for m in hand.melds],
+            pair=TileMapper.to_schema(hand.pair),
+        )
 
     @staticmethod
     def from_short(melds: List[str], pair: str) -> Hand:

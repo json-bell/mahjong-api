@@ -25,6 +25,10 @@ class TileMapper:
         return Tile(schema.suit, schema.value)
 
     @staticmethod
+    def to_schema(tile: Tile) -> TileSchema:
+        return TileSchema(suit=tile.suit, value=tile.value)
+
+    @staticmethod
     def from_short(code: str) -> Tile:
         """
         Generates a Tile from a string encoding, e.g.

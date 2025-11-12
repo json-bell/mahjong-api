@@ -4,7 +4,7 @@ from fastapi.testclient import TestClient
 from app.db.base import Base
 from app.db.session import engine, SessionLocal
 from app.main import app  # your FastAPI app
-from app.db.models import Game, Hand
+from app.db.models import GameModel, HandModel, PlayerModel
 from app.db.dependencies import get_db
 from app.domain import PlayerSlot
 
@@ -51,7 +51,7 @@ def client(db_session):
 
 @pytest.fixture
 def seed_game(db_session):
-    game = Game()
+    game = GameModel()
     db_session.add(game)
     db_session.commit()
     return {"game": game}
@@ -64,7 +64,7 @@ def game_factory(db_session):
     def _create_game(**overrides):
         defaults = {}
         defaults.update(overrides)
-        game = Game(**defaults)
+        game = GameModel(**defaults)
 
         db_session.add(game)
         db_session.commit()
@@ -90,13 +90,43 @@ def example_hand_tiles():
 def hand_factory(db_session, example_hand_tiles):
     """Returns a factory function to create hands for tests."""
 
-    def _create_hand(game_id, **overrides):
-        defaults = {**example_hand_tiles, "game_id": game_id, "player_slot": PlayerSlot.FIRST}
+    def _create_hand(
+        game_id,
+        # player_id,
+        **overrides,
+    ):
+        defaults = {
+            "hand": example_hand_tiles,
+            "game_id": game_id,
+            "player_slot": PlayerSlot.FIRST,
+            "score": 123,
+            # "player_id": player_id,
+        }
         defaults.update(overrides)
 
-        hand = Hand(**defaults)
+        hand = HandModel(**defaults)
         db_session.add(hand)
         db_session.commit()
         return hand
 
     return _create_hand
+
+
+@pytest.fixture
+def player_factory(db_session, game_id=1):
+    """Returns a player factory function to create players for tests"""
+
+    def _create_player(game_id, **overrides):
+        defaults = {
+            "game_id": game_id,
+            "name": "Mock name",
+            "player_slot": PlayerSlot.FIRST,
+        }
+        defaults.update(overrides)
+
+        player = PlayerModel(**defaults)
+        db_session.add(player)
+        db_session.commit()
+        return player
+
+    return _create_player

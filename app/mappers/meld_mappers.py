@@ -19,6 +19,10 @@ class MeldMapper:
         return Meld(schema.type, TileMapper.from_schema(schema.tile))
 
     @staticmethod
+    def to_schema(meld: Meld) -> MeldSchema:
+        return MeldSchema(type=meld.type, tile=TileMapper.to_schema(meld.tile))
+
+    @staticmethod
     def from_short(code: str):
         code = code.strip()
         type_code = code[:1].upper()

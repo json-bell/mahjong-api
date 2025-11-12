@@ -1,19 +1,23 @@
 from sqlalchemy.orm import Session
-from app.db import models
-from app.schemas import HandCreateSchema
+from ..models import HandModel
+from app.schemas import ScoredHandCreateSchema, ScoredHandOutSchema
+from app.mappers import ScoredHandMapper
 
 
-def create_hand(db: Session, hand_data: HandCreateSchema, game_id: int):
-    db_hand = models.Hand(**hand_data.model_dump(), game_id=game_id)
-    db.add(db_hand)
+def create_hand(db: Session, hand_data: ScoredHandCreateSchema) -> ScoredHandOutSchema:
+    model_hand = ScoredHandMapper.schema_to_model(hand_data)
+    db.add(model_hand)
     db.commit()
-    db.refresh(db_hand)
-    return db_hand
+    db.refresh(model_hand)
+
+    return ScoredHandMapper.model_to_schema(model_hand)
 
 
-def list_hands_by_game(db: Session, game_id: int):
-    return db.query(models.Hand).filter(models.Hand.game_id == game_id).all()
+def list_hands_by_game(db: Session, game_id: int) -> list[ScoredHandOutSchema]:
+    model_hands = db.query(HandModel).filter(HandModel.game_id == game_id).all()
+    return [ScoredHandMapper.model_to_schema(hand) for hand in model_hands]
 
 
-def list_hands(db: Session):
-    return db.query(models.Hand).all()
+def list_hands(db: Session) -> list[ScoredHandOutSchema]:
+    model_hands = db.query(HandModel).all()
+    return [ScoredHandMapper.model_to_schema(hand) for hand in model_hands]

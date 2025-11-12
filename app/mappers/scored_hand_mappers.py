@@ -20,23 +20,23 @@ class ScoredHandMapper:
         }
 
     @staticmethod
-    def from_create_schema(schema: ScoredHandCreateSchema) -> ScoredHand:
-        assert isinstance(schema, ScoredHandOutSchema), (
+    def from_schema(schema: ScoredHandCreateSchema) -> ScoredHand:
+        assert not isinstance(schema, ScoredHandOutSchema), (
             "Prefer from_out_schema for Scored Hands if returned from DB"
         )
         hand = HandMapper.from_schema(schema=schema.hand)
-        player_slot = ScoredHandCreateSchema.player_slot
+        player_slot = schema.player_slot
         score = engine.score_hand(hand)
 
         return ScoredHand(hand, player_slot, score, created_at=None)
 
     @staticmethod
-    def to_out_schema(
+    def to_schema(
         scored_hand: ScoredHand, game_id: int, id: int
     ) -> ScoredHandOutSchema:
         return ScoredHandOutSchema(
             created_at=scored_hand.created_at,
-            hand=scored_hand.hand,
+            hand=HandMapper.to_schema(scored_hand.hand),
             player_slot=scored_hand.player_slot,
             score=scored_hand.score,
             # Persistence:
@@ -45,11 +45,22 @@ class ScoredHandMapper:
         )
 
     @staticmethod
-    def to_model(scored_hand: ScoredHand) -> HandModel:
+    def to_create_schema(
+        scored_hand: ScoredHand, game_id: int
+    ) -> ScoredHandCreateSchema:
+        return ScoredHandCreateSchema(
+            hand=HandMapper.to_schema(scored_hand.hand),
+            player_slot=scored_hand.player_slot,
+            game_id=game_id,
+        )
+
+    @staticmethod
+    def to_model(scored_hand: ScoredHand, game_id: int) -> HandModel:
         return HandModel(
-            hand=scored_hand.hand,
+            hand=HandMapper.to_dict(scored_hand.hand),
             player_slot=scored_hand.player_slot,
             score=scored_hand.score,
+            game_id=game_id,
             **(
                 {"created_at": scored_hand.created_at} if scored_hand.created_at else {}
             ),
@@ -57,7 +68,7 @@ class ScoredHandMapper:
 
     @staticmethod
     def from_model(model: HandModel) -> ScoredHand:
-        hand = HandMapper.from_dict(**model.hand)
+        hand = HandMapper.from_dict(model.hand)
         return ScoredHand(
             hand=hand,
             score=model.score,
@@ -77,3 +88,16 @@ class ScoredHandMapper:
         score = engine.score_hand(hand)
 
         return ScoredHand(hand, player_slot, score, created_at)
+
+    # Convenience round trip mappers:
+    @staticmethod
+    def model_to_schema(model: HandModel) -> ScoredHandOutSchema:
+        return ScoredHandMapper.to_schema(
+            ScoredHandMapper.from_model(model), game_id=model.game_id, id=model.id
+        )
+
+    @staticmethod
+    def schema_to_model(schema: ScoredHandCreateSchema) -> HandModel:
+        return ScoredHandMapper.to_model(
+            ScoredHandMapper.from_schema(schema), game_id=schema.game_id
+        )
