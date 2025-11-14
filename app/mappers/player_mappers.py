@@ -28,6 +28,15 @@ class PlayerMapper:
             score=model.score,
         )
 
+    @staticmethod
+    def to_model(player: Player, game_id: int) -> PlayerModel:
+        return PlayerModel(
+            name="test",
+            game_id=game_id,
+            player_slot=player.player_slot,
+            score=player.score,
+        )
+
     # Convenience round trip mappers:
     @staticmethod
     def model_to_schema(model: PlayerModel) -> PlayerOutSchema:
@@ -35,4 +44,11 @@ class PlayerMapper:
             PlayerMapper.from_model(model),
             game_id=model.game_id,
             id=model.id,
+        )
+
+    @staticmethod
+    def schema_to_model(schema: PlayerCreateSchema, game_id: int) -> PlayerModel:
+        return PlayerMapper.to_model(
+            PlayerMapper.from_schema(schema),
+            game_id=game_id,
         )

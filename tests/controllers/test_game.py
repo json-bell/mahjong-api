@@ -1,5 +1,5 @@
 from datetime import datetime
-from app.schemas import PlayerOutSchema
+from app.schemas import PlayerOutSchema, GameDetailSchema, GameOutSchema, PlayerCreateSchema
 from app.domain import PlayerSlot
 
 
@@ -37,6 +37,7 @@ def test_get_game_by_id(client, game_factory):
 
     assert response.status_code == 200
     data = response.json()
+    GameDetailSchema.model_validate(data)
     assert data["id"] > 0
     assert data["hands"] == []
     assert data["players"] == []
@@ -77,3 +78,29 @@ def test_get_game_returns_422_for_invalid_id(client):
     response = client.get("/games/banana")
 
     assert response.status_code == 422
+
+
+def test_create_game_with_players(client):
+    payload = {
+        "players": [
+            PlayerCreateSchema(
+                name=f"player_{i}",
+                player_slot=PlayerSlot(i),
+                score=0,
+            ).__dict__
+            for i in range(1, 5)
+        ]
+    }
+
+    response = client.post("/games/", json=payload)
+
+    assert response.status_code == 200
+    data = response.json()
+
+    created_game = GameOutSchema.model_validate(data)
+    game_id = created_game.id
+
+    response_2 = client.get(f"/games/{game_id}")
+    game = GameDetailSchema.model_validate(response_2.json())
+    assert all(isinstance(p, PlayerOutSchema) for p in game.players)
+    assert len(game.players) == 4

@@ -14,7 +14,9 @@ router = APIRouter(prefix="/games", tags=["games"])
 
 
 @router.post("/", response_model=GameOutSchema, operation_id="createGame")
-def create_game(game: GameCreateSchema, db: Session = Depends(get_db)) -> GameOutSchema:
+def create_game(
+    game: GameCreateSchema, db: Session = Depends(get_db)
+) -> GameDetailSchema:
     """Creates and returns a game."""
     return game_crud.create_game(db, game)
 

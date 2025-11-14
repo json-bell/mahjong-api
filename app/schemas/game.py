@@ -2,14 +2,15 @@ from pydantic import BaseModel, ConfigDict
 from datetime import datetime
 from typing import Optional, List
 from .hand import ScoredHandOutSchema
-from .player import PlayerOutSchema
+from .player import PlayerOutSchema, PlayerCreateSchema
 
 
 class GameCreateSchema(BaseModel):
-    # wip # players: Optional[list[PlayerCreateSchema]]
+    players: Optional[list[PlayerCreateSchema]] = None
     # wip # east_player: PlayerSlot = PlayerSlot.FIRST
     # wip # round_wind: WindValue = WindValue.EAST
-    pass
+
+    model_config = ConfigDict(from_attributes=True)
 
 
 class GameOutSchema(BaseModel):
