@@ -39,9 +39,8 @@ def seed() -> None:
 
     hand = ScoredHandMapper.to_create_schema(
         ScoredHandMapper.from_short(melds=["CCi2", "CCi4", "PBa3", "PBa6"], pair="Ci5"),
-        game_id=game.id,
     )
-    seeded_hand = hand_crud.create_hand(db, hand)
+    seeded_hand = hand_crud.create_hand(db, hand, game_id=game.id)
 
     print(f"Seeded {settings.env} DB: Game {game.id}, Hand {seeded_hand.id}")
 

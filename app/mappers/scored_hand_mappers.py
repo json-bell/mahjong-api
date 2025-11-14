@@ -45,13 +45,10 @@ class ScoredHandMapper:
         )
 
     @staticmethod
-    def to_create_schema(
-        scored_hand: ScoredHand, game_id: int
-    ) -> ScoredHandCreateSchema:
+    def to_create_schema(scored_hand: ScoredHand) -> ScoredHandCreateSchema:
         return ScoredHandCreateSchema(
             hand=HandMapper.to_schema(scored_hand.hand),
             player_slot=scored_hand.player_slot,
-            game_id=game_id,
         )
 
     @staticmethod
