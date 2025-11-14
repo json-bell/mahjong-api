@@ -24,6 +24,8 @@ class MahjongError(Exception):
                     return None
                 elif hasattr(v, "to_dict") and callable(v.to_dict):
                     return v.to_dict()
+                elif hasattr(v, "__dict__"):
+                    return {k: serialize_value(val) for k, val in v.__dict__.items()}
                 else:
                     return str(v)
 
@@ -49,3 +51,9 @@ class InvalidHandError(MahjongError):
     """Raised when a Mahjong hand is invalid."""
 
     code = "INVALID_HAND"
+
+
+class InvalidGameError(MahjongError):
+    """Raised for an invalid game"""
+
+    code = "INVALID_GAME"

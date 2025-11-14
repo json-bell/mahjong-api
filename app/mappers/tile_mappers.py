@@ -6,6 +6,7 @@ from app.domain import (
     NumberValue,
     TileValue,
     InvalidTileError,
+    parse_tile_value,
 )
 from app.schemas import TileSchema
 
@@ -13,11 +14,19 @@ from app.schemas import TileSchema
 class TileMapper:
     @staticmethod
     def to_dict(tile: Tile):
-        return {"suit": tile.suit.value, "tile": tile.value.value}
+        return {"suit": tile.suit.value, "value": tile.value.value}
+
+    @staticmethod
+    def from_dict(dictionary: dict) -> Tile:
+        return Tile(Suit(dictionary["suit"]), parse_tile_value(dictionary["value"]))
 
     @staticmethod
     def from_schema(schema: TileSchema) -> Tile:
         return Tile(schema.suit, schema.value)
+
+    @staticmethod
+    def to_schema(tile: Tile) -> TileSchema:
+        return TileSchema(suit=tile.suit, value=tile.value)
 
     @staticmethod
     def from_short(code: str) -> Tile:

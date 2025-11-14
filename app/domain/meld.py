@@ -1,13 +1,16 @@
+from dataclasses import dataclass
 from .enums import MeldType, NumberValue
 from .tile import Tile
 from .exceptions import InvalidTileError, InvalidMeldError
 
 
+@dataclass
 class Meld:
-    def __init__(self, type: MeldType, tile: Tile):
-        self.type = type
-        self.tile = tile  # the first tile of the meld
-        # for chows this is the lowest tile, for pongs and kongs this is any tile
+    type: MeldType
+    tile: Tile  # the first tile of the meld
+    # for chows this is the lowest tile, for pongs and kongs this is any tile
+
+    def __post_init__(self):
         self._validate()
 
     @property

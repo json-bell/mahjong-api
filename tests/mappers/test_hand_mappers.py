@@ -1,6 +1,6 @@
 from app.domain import Tile, Meld, Hand, Suit, MeldType, NumberValue
 from app.mappers import HandMapper
-from app.schemas import HandCreateSchema, MeldSchema, TileSchema
+from app.schemas import HandSchema, MeldSchema, TileSchema
 import pytest
 
 
@@ -9,7 +9,7 @@ def hand_schema_fixture():
     # Create HandSchema with 4 melds and a pair
     tile_schema = TileSchema(suit=Suit.CIRCLE, value=NumberValue.FIVE)
     meld_schemas = [MeldSchema(type=MeldType.CHOW, tile=tile_schema) for _ in range(4)]
-    return HandCreateSchema(melds=meld_schemas, pair=tile_schema, game_id=1)
+    return HandSchema(melds=meld_schemas, pair=tile_schema)
 
 
 def test_hand_from_schema(hand_schema_fixture):
@@ -34,3 +34,18 @@ def test_hand_from_short():
             Suit.CHARACTER.value,
         ]
     )
+
+
+def test_hand_from_dict(example_hand_tiles):
+    hand = HandMapper.from_dict(example_hand_tiles)
+    assert isinstance(hand, Hand)
+    assert len(hand.melds) == 4
+    assert isinstance(hand.pair, Tile)
+    assert all(isinstance(m, Meld) for m in hand.melds)
+
+
+def test_hand_to_and_from_dict():
+    hand = HandMapper.from_short(melds=["CBa4", "KDrG", "PWiE", "CCh2"], pair="DrR")
+    dicted_hand = HandMapper.to_dict(hand)
+    reversed_hand = HandMapper.from_dict(dicted_hand)
+    assert reversed_hand == hand
