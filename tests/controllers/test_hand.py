@@ -1,3 +1,6 @@
+from app.schemas import ScoredHandOutSchema
+
+
 def test_read_hands_endpoint(client, game_factory, hand_factory):
     game = game_factory()
     for _ in range(4):
@@ -9,6 +12,8 @@ def test_read_hands_endpoint(client, game_factory, hand_factory):
     data = response.json()
 
     assert len(data) == 4
+    hands = [ScoredHandOutSchema.model_validate(hand) for hand in data]
+    assert all(hand.game_id == game.id for hand in hands)
     assert all("id" in hand for hand in data)
     assert all("player_slot" in hand for hand in data)
     assert all("score" in hand for hand in data)

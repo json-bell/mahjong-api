@@ -1,5 +1,6 @@
 from datetime import datetime
-from app.schemas import HandOutSchema
+from app.schemas import PlayerOutSchema
+from app.domain import PlayerSlot
 
 
 def test_create_game(client):
@@ -38,14 +39,19 @@ def test_get_game_by_id(client, game_factory):
     data = response.json()
     assert data["id"] > 0
     assert data["hands"] == []
-    # wip # assert data["players"] == []
+    assert data["players"] == []
 
 
-def test_get_game_by_id_has_details(client, hand_factory, game_factory):
+def test_get_game_by_id_has_details(client, hand_factory, game_factory, player_factory):
     game = game_factory()
-    hand_factory(game.id)
-    # wip # player_names = ["player_1", "player_2", "player_3"]
-    # wip # players = [player_factory(name=name) for name in player_names]
+
+    player_names = ["player_1", "player_2", "player_3", "player_4"]
+    [
+        player_factory(game_id=game.id, name=player_names[i], player_slot=PlayerSlot(i + 1))
+        for i in range(4)
+    ]
+
+    hand_factory(game_id=game.id)
 
     response = client.get(f"/games/{game.id}")
 
@@ -54,8 +60,11 @@ def test_get_game_by_id_has_details(client, hand_factory, game_factory):
 
     assert len(data["hands"]) == 1
     db_hand = data["hands"][0]
-    hand_schema = HandOutSchema.model_validate(db_hand)
-    assert hand_schema.game_id == game.id
+    assert db_hand["game_id"] == game.id
+
+    assert len(data["players"]) == 4
+    for player in data["players"]:
+        PlayerOutSchema.model_validate(player)
 
 
 def test_get_game_returns_404_for_nonexistent_id(client):

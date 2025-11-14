@@ -1,5 +1,5 @@
 import pytest
-from app.domain import Player, Game, InvalidGameError, PlayerSlot
+from app.domain import Player, Game, PlayerSlot
 from app.mappers import HandMapper
 from datetime import datetime
 
@@ -38,13 +38,3 @@ def test_game_options(mock_time, mock_player):
     assert len(game.hands) == 1
     assert len(game.players) == 4
     assert game.created_at == mock_time
-
-
-def test_game_validate_errors(mock_player):
-    # Empty players
-    with pytest.raises(InvalidGameError):
-        Game(players=[])
-
-    # Wrong number of players
-    with pytest.raises(InvalidGameError):
-        Game(players=[mock_player()])

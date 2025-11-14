@@ -2,9 +2,11 @@ from pydantic import BaseModel, ConfigDict
 from datetime import datetime
 from typing import Optional, List
 from .hand import ScoredHandOutSchema
+from .player import PlayerOutSchema
 
 
 class GameCreateSchema(BaseModel):
+    # wip # players: Optional[list[PlayerCreateSchema]]
     # wip # east_player: PlayerSlot = PlayerSlot.FIRST
     # wip # round_wind: WindValue = WindValue.EAST
     pass
@@ -21,4 +23,4 @@ class GameOutSchema(BaseModel):
 
 class GameDetailSchema(GameOutSchema):
     hands: List[ScoredHandOutSchema]
-    # wip #players: List[PlayerOutSchema]
+    players: List[PlayerOutSchema]

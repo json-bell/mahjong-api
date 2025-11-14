@@ -4,8 +4,10 @@ from app.schemas import ScoredHandCreateSchema, ScoredHandOutSchema
 from app.mappers import ScoredHandMapper
 
 
-def create_hand(db: Session, hand_data: ScoredHandCreateSchema) -> ScoredHandOutSchema:
-    model_hand = ScoredHandMapper.schema_to_model(hand_data)
+def create_hand(
+    db: Session, hand_data: ScoredHandCreateSchema, game_id: int
+) -> ScoredHandOutSchema:
+    model_hand = ScoredHandMapper.schema_to_model(hand_data, game_id)
     db.add(model_hand)
     db.commit()
     db.refresh(model_hand)

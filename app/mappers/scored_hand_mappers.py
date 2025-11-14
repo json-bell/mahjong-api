@@ -97,7 +97,7 @@ class ScoredHandMapper:
         )
 
     @staticmethod
-    def schema_to_model(schema: ScoredHandCreateSchema) -> HandModel:
+    def schema_to_model(schema: ScoredHandCreateSchema, game_id: int) -> HandModel:
         return ScoredHandMapper.to_model(
-            ScoredHandMapper.from_schema(schema), game_id=schema.game_id
+            ScoredHandMapper.from_schema(schema), game_id=game_id
         )

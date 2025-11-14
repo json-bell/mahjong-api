@@ -1,47 +1,61 @@
-from sqlalchemy import Column, Integer, ForeignKey, DateTime, func
-from sqlalchemy.orm import relationship
+from sqlalchemy import Integer, ForeignKey, VARCHAR, DateTime, func
+from datetime import datetime
+from sqlalchemy.orm import relationship, Mapped, mapped_column
 from sqlalchemy.dialects.postgresql import JSONB
 from .base import Base
 
 
-class Game(Base):
+class GameModel(Base):
     __tablename__ = "games"
 
-    id = Column(Integer, primary_key=True, index=True)
-    created_at = Column(DateTime(timezone=True), server_default=func.now())
-    # wip # score = Column(Integer)
-    # wip # round_wind: Column(Enum(WindValueDB, name="wind_enum"), nullable=False)
-    # wip # east_player: Column(Integer)
+    id: Mapped[int] = mapped_column(primary_key=True, index=True)
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), server_default=func.now()
+    )
+    # wip # round_wind: Mapped[str] = mapped_column(Enum(WindValueDB, name="wind_enum"), nullable=False)
+    # wip # east_player: Mapped[int] = mapped_column(Integer)
 
-    hands = relationship("Hand", back_populates="game")
-    # wip # players = relationship("Player", back_populates="players")
+    hands: Mapped[list["HandModel"]] = relationship("HandModel", back_populates="game")
+    players: Mapped[list["PlayerModel"]] = relationship(
+        "PlayerModel", back_populates="game"
+    )
 
 
-class Hand(Base):
+class HandModel(Base):
     __tablename__ = "hands"
 
-    id = Column(Integer, primary_key=True, index=True)
-    game_id = Column(Integer, ForeignKey("games.id"), nullable=False)
-    player_slot = Column(Integer, nullable=False)
-    melds = Column(JSONB, nullable=False)  # JSON that parses to 4 melds
-    pair = Column(JSONB, nullable=False)  # JSON that parses to a tile
-    score = Column(Integer, default=0)
-    # wip # player_id = Column(Integer, ForeignKey("players.id"))
+    id: Mapped[int] = mapped_column(primary_key=True, index=True)
+    game_id: Mapped[int] = mapped_column(
+        Integer, ForeignKey("games.id"), nullable=False
+    )
+    """Possibly we store this in an ideal case, so that we don't have to repeatedly make calls to Game"""
+    # wip # player_id: Mapped[int] = mapped_column(ForeignKey("players.id"), nullable=False)
+    player_slot: Mapped[int] = mapped_column(nullable=False)
+    hand: Mapped[dict] = mapped_column(
+        JSONB, nullable=False
+    )  # HandSchema JSON - 4 melds & a pair
+    score: Mapped[int] = mapped_column(Integer)
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), server_default=func.now()
+    )
     # wip # stuff for history - seat wind, round wind, list of what score increases have been applied
 
-    game = relationship("Game", back_populates="hands")
-    # wip # player = relationship("Player", back_populates="players")
+    game: Mapped[list["GameModel"]] = relationship("GameModel", back_populates="hands")
+    # wip # player: Mapped[list["PlayerModel"]] = relationship("PlayerModel", back_populates="hands")
 
 
-""" wip
-class Player(Base):
+class PlayerModel(Base):
     __tablename__ = "players"
 
-    id = Column(Integer, primary_key=True, index=True)
-    name = Column(VARCHAR(31))
-    game_id = Column(Integer, ForeignKey("games.id"))
-    player_index = Column(Integer)
+    id: Mapped[int] = mapped_column(primary_key=True, index=True)
+    name: Mapped[str] = mapped_column(VARCHAR(31))
+    game_id: Mapped[int] = mapped_column(
+        Integer, ForeignKey("games.id"), nullable=False
+    )
+    player_slot: Mapped[int] = mapped_column(nullable=False)
+    score: Mapped[int] = mapped_column(default=0)
 
-    game = relationship("Game", back_populates="hands")
-    hands = relationship("Hand", back_populates="game")
-"""
+    game: Mapped[list["GameModel"]] = relationship(
+        "GameModel", back_populates="players"
+    )
+    # wip # hands: Mapped[list["HandModel"]] = relationship("HandModel", back_populates="player")

@@ -17,12 +17,12 @@ class HandSchema(BaseModel):
 class ScoredHandCreateSchema(BaseModel):
     hand: HandSchema
     player_slot: PlayerSlot
-    game_id: int
 
     model_config = ConfigDict(from_attributes=True)
 
 
 class ScoredHandOutSchema(ScoredHandCreateSchema):
     id: int
+    game_id: int
     created_at: Optional[datetime]
     score: int
