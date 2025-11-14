@@ -56,8 +56,25 @@ class DragonValue(LabelledEnum):
 TileValue = Union[NumberValue, WindValue, DragonValue]
 
 
+def parse_tile_value(value: str) -> TileValue:
+    for enum_cls in (NumberValue, WindValue, DragonValue):
+        try:
+            return enum_cls(value)
+        except ValueError:
+            continue
+    raise ValueError(f"{value} is not a valid TileA, TileB, or TileC value")
+
+
 @unique
 class MeldType(LabelledEnum):
     CHOW = "chow"
     PONG = "pong"
     KONG = "kong"
+
+
+@unique
+class PlayerSlot(int, Enum):
+    FIRST = 1
+    SECOND = 2
+    THIRD = 3
+    FOURTH = 4

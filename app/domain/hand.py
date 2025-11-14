@@ -1,14 +1,16 @@
-from typing import List
+from dataclasses import dataclass
 from .enums import MeldType, Suit
 from .tile import Tile
 from .meld import Meld
 from .exceptions import InvalidTileError, InvalidMeldError, InvalidHandError
 
 
+@dataclass
 class Hand:
-    def __init__(self, melds: List[Meld], pair: Tile):
-        self.melds = melds
-        self.pair = pair
+    melds: list[Meld]
+    pair: Tile
+
+    def __post_init__(self):
         self._validate()
 
     @property

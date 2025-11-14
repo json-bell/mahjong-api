@@ -3,7 +3,8 @@ from sqlalchemy.orm import sessionmaker, Session
 from app.db.base import Base
 from app.config import settings
 from app.db.crud import hand as hand_crud, game as game_crud
-from app.schemas import HandCreateSchema, GameCreateSchema
+from app.schemas import GameCreateSchema
+from app.mappers import ScoredHandMapper
 
 
 engine = create_engine(settings.database_url)
@@ -18,10 +19,10 @@ def init_db():
 
 hand_dict = {
     "melds": [
-        {"type": "chow", "tile": {"suit": "circle", "value": "2"}},
-        {"type": "chow", "tile": {"suit": "circle", "value": "4"}},
-        {"type": "pong", "tile": {"suit": "bamboo", "value": "3"}},
-        {"type": "pong", "tile": {"suit": "bamboo", "value": "6"}},
+        "CCi2",
+        "CCi4",
+        "PBa3",
+        "PBa6",
     ],
     "pair": {"suit": "circle", "value": "5"},
 }
@@ -36,10 +37,12 @@ def seed() -> None:
 
     game = game_crud.create_game(db, GameCreateSchema())
 
-    hand = HandCreateSchema.model_validate(hand_dict)
-    hand = hand_crud.create_hand(db, hand, game.id)
+    hand = ScoredHandMapper.to_create_schema(
+        ScoredHandMapper.from_short(melds=["CCi2", "CCi4", "PBa3", "PBa6"], pair="Ci5"),
+    )
+    seeded_hand = hand_crud.create_hand(db, hand, game_id=game.id)
 
-    print(f"Seeded {settings.env} DB: Game {game.id}, Hand {hand.id}")
+    print(f"Seeded {settings.env} DB: Game {game.id}, Hand {seeded_hand.id}")
 
 
 if __name__ == "__main__":

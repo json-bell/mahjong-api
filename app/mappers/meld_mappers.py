@@ -5,12 +5,22 @@ from app.schemas import MeldSchema
 
 class MeldMapper:
     @staticmethod
-    def to_dict(meld: Meld):
+    def to_dict(meld: Meld) -> dict:
         return {"type": meld.type.value, "tile": TileMapper.to_dict(meld.tile)}
+
+    @staticmethod
+    def from_dict(dictionary: dict) -> Meld:
+        return Meld(
+            type=dictionary["type"], tile=TileMapper.from_dict(dictionary["tile"])
+        )
 
     @staticmethod
     def from_schema(schema: MeldSchema) -> Meld:
         return Meld(schema.type, TileMapper.from_schema(schema.tile))
+
+    @staticmethod
+    def to_schema(meld: Meld) -> MeldSchema:
+        return MeldSchema(type=meld.type, tile=TileMapper.to_schema(meld.tile))
 
     @staticmethod
     def from_short(code: str):

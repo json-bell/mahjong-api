@@ -1,7 +1,11 @@
-class Game:
-    def __init__(self, game_id: int):
-        self.game_id = game_id
-        self._validate()
+from .scored_hand import ScoredHand
+from .player import Player
+from datetime import datetime
+from dataclasses import dataclass, field
 
-    def _validate(self):
-        pass
+
+@dataclass
+class Game:
+    created_at: datetime | None = None
+    players: list[Player] | None = None
+    hands: list[ScoredHand] | None = field(default_factory=list)
