@@ -6,6 +6,8 @@ This is a repository for a Mahjong score tracker. The goal is to have the follow
 - Track the score throughout a game by submitting hands
 - Access this through the front-end web app, synced between players here
 
+Check out the [hosted site](https://mahjong-scoring.netlify.app/) or the [front-end repository](https://github.com/json-bell/mahjong-scoring-app)
+
 # Requirements
 
 Supported Python version: 3.12.7+
