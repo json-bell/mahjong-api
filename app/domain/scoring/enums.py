@@ -27,7 +27,7 @@ class RuleSlug(LabelledEnum):
     SEVEN_PAIRS = "seven_pairs"
     # 6 fan
     FULL_FLUSH = "full_flush"  # suit-based
-    # limit
+    # limit - 10 fan
     FOUR_CONCEALED_PUNGS = "four_concealed_pungs"
     BIG_THREE_DRAGONS = "big_three_dragons"  # Terminals/Honors
     LITTLE_FOUR_WINDS = "little_four_winds"  # Terminals/Honors

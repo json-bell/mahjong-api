@@ -47,7 +47,7 @@ class BigThreeDragonsRule(ScoringRule):
         super().__init__(
             slug=RuleSlug.BIG_THREE_DRAGONS,
             description="Hand has three dragon pungs.",
-            score_value=13,
+            score_value=10,
             supersedes=[
                 RuleSlug.DRAGON_PUNG,
                 RuleSlug.ALL_PUNGS,
@@ -70,7 +70,7 @@ class LittleFourWindsRule(ScoringRule):
         super().__init__(
             slug=RuleSlug.LITTLE_FOUR_WINDS,
             description="Hand has three pungs and a pair of winds.",
-            score_value=13,
+            score_value=10,
             supersedes=[
                 RuleSlug.ALL_PUNGS,
                 RuleSlug.ALL_KONGS,
@@ -95,7 +95,7 @@ class BigFourWindsRule(ScoringRule):
         super().__init__(
             slug=RuleSlug.BIG_FOUR_WINDS,
             description="Hand has four pungs of winds.",
-            score_value=13,
+            score_value=10,
             supersedes=[
                 RuleSlug.ALL_PUNGS,
                 RuleSlug.ALL_KONGS,
@@ -117,7 +117,7 @@ class AllHonoursRule(ScoringRule):
         super().__init__(
             slug=RuleSlug.ALL_HONORS,
             description="Hand consists only of honor tiles.",
-            score_value=13,
+            score_value=10,
             supersedes=[
                 RuleSlug.ALL_PUNGS,
                 RuleSlug.ALL_KONGS,
@@ -143,7 +143,7 @@ class AllTerminalsRule(ScoringRule):
         super().__init__(
             slug=RuleSlug.ALL_TERMINALS,
             description="Hand consists only of terminals.",
-            score_value=13,
+            score_value=10,
             supersedes=[
                 RuleSlug.ALL_PUNGS,
                 RuleSlug.ALL_KONGS,

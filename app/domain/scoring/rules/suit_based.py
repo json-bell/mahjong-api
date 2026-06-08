@@ -44,7 +44,7 @@ class DragonSuitRule(ScoringRule):
         super().__init__(
             slug=slug,
             description=description,
-            score_value=13,
+            score_value=10,
             supersedes=[
                 RuleSlug.HALF_FLUSH,
                 RuleSlug.ALL_PUNGS,

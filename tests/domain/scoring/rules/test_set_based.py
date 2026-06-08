@@ -9,7 +9,7 @@ import pytest
         (["CCi2", "CCi4", "CBa3", "CBa6"], "Ch3", RuleSlug.ALL_CHOWS, 1),
         (["PCi2", "PCi4", "PBa3", "PBa6"], "DrG", RuleSlug.ALL_PUNGS, 3),
         (["PCi2", "KCi4", "PBa3", "KBa6"], "DrG", RuleSlug.ALL_PUNGS, 3),
-        (["KCi2", "KCi4", "KBa3", "KBa6"], "DrG", RuleSlug.ALL_KONGS, 13),
+        (["KCi2", "KCi4", "KBa3", "KBa6"], "DrG", RuleSlug.ALL_KONGS, 10),
     ],
 )
 def test_basic_rules(melds, pair, expected_only_slug, expected_score):
@@ -40,7 +40,7 @@ def test_all_kongs_rule():
 
     assert RuleSlug.ALL_PUNGS not in slugs
     assert [RuleSlug.ALL_KONGS] == slugs
-    assert score == 13
+    assert score == 10
 
 
 def test_all_chows_requires_suit_pair():

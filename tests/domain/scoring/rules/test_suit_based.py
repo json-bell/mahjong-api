@@ -8,7 +8,7 @@ import pytest
     [
         (["CCi2", "CCi4", "PWiE", "PCi8"], "DrG", RuleSlug.HALF_FLUSH, 3),
         (["CCi2", "CCi4", "PCi9", "PCi8"], "Ci3", RuleSlug.FULL_FLUSH, 6),
-        (["PBa2", "PBa4", "PDrG", "PBa8"], "Ba3", RuleSlug.JADE_DRAGON, 13),
+        (["PBa2", "PBa4", "PDrG", "PBa8"], "Ba3", RuleSlug.JADE_DRAGON, 10),
     ],
 )
 def test_basic_rules(melds, pair, expected_only_slug, expected_score):

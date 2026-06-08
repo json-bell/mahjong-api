@@ -40,7 +40,7 @@ class AllKongsRule(ScoringRule):
         super().__init__(
             slug=RuleSlug.ALL_KONGS,
             description="Hand has four kongs and a pair.",
-            score_value=13,
+            score_value=10,
             supersedes=[RuleSlug.ALL_PUNGS],
         )
 
